@@ -80,7 +80,7 @@ public class Validate {
         value = String.valueOf(rs.getObject("ultimo"));
         ps.close();
 
-        conexion.desconectar();
+        //conexion.desconectar();
 
         if (value.equals("null")) {
             return "0";
@@ -110,19 +110,38 @@ public class Validate {
 
     }
 
-    public int obtenerNroHistoria(String cedula) throws Exception {
+    public int obtenerNroHistoriaCedula(String cedula) throws Exception {
 
         conexion.conectar();
-        cs = connection.prepareCall("{CALL obtenerNroHistoria(?)}");
+        cs = connection.prepareCall("{CALL obtenerNroHistoriaCedula(?)}");
         cs.setString(1, cedula);
         rs = cs.executeQuery();
-        
+
+        rs.next();
+        int nroHistoria = rs.getInt("nroHistoria");
+        cs.close();
+
+        if (nroHistoria == 0) {
+            return -1;//manejar con Excepciones
+        } else {
+            return nroHistoria;
+        }
+
+    }
+
+    public int obtenerNroHistoriaNombre(String nombre) throws Exception {
+
+        conexion.conectar();
+        cs = connection.prepareCall("{CALL obtenerNroHistoriaNombre(?)}");
+        cs.setString(1, nombre);
+        rs = cs.executeQuery();
+
         rs.next();
         int nroHistoria = rs.getInt("nroHistoria");
         cs.close();
         conexion.desconectar();
-        
-        if (nroHistoria== 0) {
+
+        if (nroHistoria == 0) {
             return -1;
         } else {
             return nroHistoria;
@@ -130,7 +149,27 @@ public class Validate {
 
     }
 
-    public static ArrayList<LocalDate> getDates(LocalDate startDate, LocalDate endDate) {
+    public String obtenerIdPersonaNombre(String nombre) throws Exception {
+
+        conexion.conectar();
+        cs = connection.prepareCall("{CALL obtenerIdPersonaNombre(?)}");
+        cs.setString(1, nombre);
+        rs = cs.executeQuery();
+
+        rs.next();
+        String idPersona = rs.getString("idPersona");
+        cs.close();
+        conexion.desconectar();
+
+        if (idPersona == null) {
+            throw new Exception("No existe persona con ese nombre");// manejar con Excepciones
+        } else {
+            return idPersona;
+        }
+
+    }
+    
+     public static ArrayList<LocalDate> getDates(LocalDate startDate, LocalDate endDate) {
 
         long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
         return (ArrayList) (IntStream.iterate(0, i -> i + 1)
@@ -138,6 +177,7 @@ public class Validate {
                 .mapToObj(i -> startDate.plusDays(i))
                 .collect(Collectors.toList()));
     }
+    
 
     public HashMap<String, String> getTablas() {
         return tablas;

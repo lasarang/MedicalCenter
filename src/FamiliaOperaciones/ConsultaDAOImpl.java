@@ -7,6 +7,7 @@ package FamiliaOperaciones;
 
 import BaseDeDatos.Conexion;
 import ClasesAuxiliares.Horario;
+import ClasesAuxiliares.HorarioAccion;
 import ClasesAuxiliares.Orden;
 import ClasesAuxiliares.Producto;
 import ClasesAuxiliares.SignosVitales;
@@ -18,12 +19,15 @@ import FamiliaAcciones.MedicionGlucosa;
 import FamiliaAcciones.MedicionPA;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -34,23 +38,33 @@ public class ConsultaDAOImpl implements IConsultaDAO {
     private final Conexion conexion = Conexion.getInstancia();
     private final Connection connection = conexion.getConnection();
     private final Validate validate = new Validate();
-    private CallableStatement cs, cs2, cs3;
+    private CallableStatement cs, cs2, cs3, cs4, cs5, cs6;
     private PreparedStatement ps;
-    private ResultSet rs, rs2, rs3;
+    private ResultSet rs, rs2, rs3, rs4, rs5, rs6;
+    private Horario horario;
+    private HorarioAccion horarioAccion;
+    private Accion accion;
+    private MedicionGlucosa mg;
+    private MedicionPA mpa;
+    private AdmiMedicina am;
+    private Producto medicamento;
+    private ArrayList<String> parametros;
+    private ArrayList<Horario> horarios;
+    private ArrayList<HorarioAccion> horariosAcciones;
+    private ArrayList<Producto> medicamentos;
     private ArrayList<ConsultaMedica> consultasObtenidas;
+    private ArrayList<String[]> proximasConsultas;
+    private HashMap<String, ArrayList<String[]>> diagnosticos;
     private ConsultaMedica cm;
     private SignosVitales signos;
-    private Tratamiento tm;
+    private Tratamiento tm, tm2;
     private Orden ord;
 
     @Override
     public void create(ConsultaMedica consulta) throws Exception {//Si no funciona, considerar no utilizar el mismo cs
         Tratamiento tratamiento = consulta.getTratamiento();
         Orden orden = consulta.getOrden();
-        //Documento rx = tratamiento.getDocReceta();
-        System.out.println("dentro de createConsulta");
-        conexion.conectar();
-        System.out.println();
+
         //Consulta: Operacion
         cs = connection.prepareCall("{CALL createOperacion(?, ?, ?, ?)}");
         cs.setInt(1, consulta.getIdPersona1());
@@ -79,7 +93,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         cs.setInt(1, consulta.getIdConsulta());
         cs.setDouble(2, signos.getPulso());
         cs.setDouble(3, signos.getFrecuenciaRespiratoria());
-        cs.setDouble(4, signos.getPresionSitolica());
+        cs.setDouble(4, signos.getPresionSistolica());
         cs.setDouble(5, signos.getPresionDiastolica());
         cs.setDouble(6, signos.getSaturacionOxigeno());
         cs.setDouble(7, signos.getTemperatura());
@@ -180,40 +194,27 @@ public class ConsultaDAOImpl implements IConsultaDAO {
 
     }
 
-    private ArrayList<Integer> readHorariosTratamiento(int idTratamiento) throws Exception {
-        ArrayList<Integer> horarios = new ArrayList<>();
-        ps = connection.prepareStatement("SELECT idHorario FROM Horarios WHERE ?=idSchedule");
-        ps.setInt(1, idTratamiento);
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            horarios.add(rs.getInt("idHorario"));
-        }
-
-        ps.close();
-        return horarios;
-    }
-
     private void createHorarios(Tratamiento tratamiento) throws Exception {
-        for (LocalDate fecha : tratamiento.getFechas()) {
 
-            //Horarios
-            for (Horario horario : tratamiento.getHorarios()) {
-                LocalTime hora = horario.getHora();
-                String condicionComida = horario.getCondicionComida();
+        //Horarios
+        for (Horario horario : tratamiento.getHorarios()) {
+            LocalTime hora = horario.getHora();
+            String condicionComida = horario.getCondicionComida();
 
-                cs = connection.prepareCall("{CALL createHorario(?, ?, ?)}");
-                cs.setInt(1, tratamiento.getIdTratamiento());//idTratamiento
-                cs.setObject(2, hora);
-                cs.setString(3, condicionComida);
+            cs = connection.prepareCall("{CALL createHorario(?, ?, ?)}");
+            cs.setInt(1, tratamiento.getIdTratamiento());//idTratamiento
+            cs.setObject(2, hora);
+            cs.setString(3, condicionComida);
 
-                cs.executeQuery();
-                cs.close();
-                int idAgenda = Integer.parseInt(validate.ultimoId("Horarios"));
-                System.out.println("Horario #: " + idAgenda);
+            cs.executeQuery();
+            cs.close();
+            int idAgenda = Integer.parseInt(validate.ultimoId("Horarios"));
+            System.out.println("Horario #: " + idAgenda);
 
-                int c = 1;
+            int c = 1;
+            for (LocalDate fecha : tratamiento.getFechas()) {
                 for (Accion accion : horario.getAcciones()) {
-                    System.out.println("Accion nro: " + c);
+                    // System.out.println("Accion nro: " + c);
                     cs2 = connection.prepareCall("{CALL createAccion(?)}");
                     cs2.setString(1, accion.getTipo());//Accion
                     cs2.executeQuery();
@@ -224,20 +225,19 @@ public class ConsultaDAOImpl implements IConsultaDAO {
                     //Accion: AdmiMedicina
                     if (accion instanceof AdmiMedicina) {
                         AdmiMedicina am = (AdmiMedicina) accion;
-                        System.out.println("dentro de admimedicina");
 
                         cs2 = connection.prepareCall("{CALL createAdmiMedicina(?)}");
                         cs2.setInt(1, idAccion);//idAdmiMedicine               
                         cs2.executeQuery();
                         cs2.close();
 
-                        int idMedicionGlucosa = Integer.parseInt(validate.ultimoId("MedicionesGlucosa"));
+                        int idAdmiMedicina = Integer.parseInt(validate.ultimoId("AdmiMedicinas"));
 
                         //AdmiMedicina: TomaMedicina
                         for (Producto medicamento : am.getMedicamentos()) {
 
                             cs3 = connection.prepareCall("{CALL createTomaMedicina(?, ?, ?)}");
-                            cs3.setInt(1, idMedicionGlucosa);//idTake
+                            cs3.setInt(1, idAdmiMedicina);//idTake
                             cs3.setInt(2, medicamento.getIdProducto());//idMedicamento 
                             cs3.setInt(3, medicamento.getCantidad());//cantidad
                             cs3.executeQuery();
@@ -257,11 +257,6 @@ public class ConsultaDAOImpl implements IConsultaDAO {
                         //Accion: MedicionPA
                     } else if (accion instanceof MedicionPA) {
                         MedicionPA mpa = (MedicionPA) accion;
-
-                        cs2 = connection.prepareCall("{CALL createAccion(?)}");
-                        cs2.setString(1, "MedicionPA");//Accion
-                        cs2.executeQuery();
-                        cs2.close();
 
                         cs2 = connection.prepareCall("{CALL createMedicionPA(?, ?, ?, ?)}");
                         cs2.setInt(1, idAccion);//idMeasurePA
@@ -285,11 +280,6 @@ public class ConsultaDAOImpl implements IConsultaDAO {
 
                         MedicionGlucosa mg = (MedicionGlucosa) accion;
 
-                        cs2 = connection.prepareCall("{CALL createAccion(?)}");
-                        cs2.setString(1, "MedicionGlucosa");//Accion
-                        cs2.executeQuery();
-                        cs2.close();
-
                         cs2 = connection.prepareCall("{CALL createMedicionGlucosa(?, ?)}");
                         cs2.setInt(1, idAccion);//idMeasureGlucose 
                         cs2.setObject(2, null);//Glucosa
@@ -306,7 +296,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
                         cs2.close();
 
                     }
-                    c++;
+
                 }
 
             }
@@ -316,35 +306,49 @@ public class ConsultaDAOImpl implements IConsultaDAO {
     }
 
     @Override
-    public ArrayList<ConsultaMedica> readAll() throws Exception {
-        cm = new ConsultaMedica();
-        ord = new Orden();
-        tm = new Tratamiento();
+    public ArrayList<ConsultaMedica> readAllConsultasPaciente(String cedulaNombre) throws Exception {
+
         consultasObtenidas = new ArrayList<>();
 
-        //Consultas
-        conexion.conectar();
-        cs = connection.prepareCall("{CALL readAllConsultas()}");
+        int nroHistoria;
+        if (Validate.isNumeric(cedulaNombre)) {
+            nroHistoria = validate.obtenerNroHistoriaCedula(cedulaNombre);
+        } else {
+            nroHistoria = validate.obtenerNroHistoriaNombre(cedulaNombre);
+        }
+
+        cs = connection.prepareCall("{CALL readNroHistoriaConsulta(?)}");
+        cs.setInt(1, nroHistoria);
         rs = cs.executeQuery();
 
+        //Operacion-ConsultaMedica
         while (rs.next()) {
-            int idConsulta = rs.getInt("idConsulta"),
-                    idPersona1 = rs.getInt("idPersona1"),
-                    idPersona2 = rs.getInt("idPersona2");
-            String fechaHoraInicio = String.valueOf(rs.getObject("FechaHoraInicio")),
-                    fechaHoraFin = String.valueOf(rs.getObject("FechaHoraFin")),
+            cm = new ConsultaMedica();
+            ord = new Orden();
+            tm = new Tratamiento();
+            int idOperacion = rs.getInt("idOperacion"),
+                    idPersona1 = rs.getInt("idPerson1"),
+                    idPersona2 = rs.getInt("idPerson2"),
+                    idConsulta = rs.getInt("idConsulta");
+
+            String tipo = rs.getString("Tipo"),
                     motivos = rs.getString("Motivos"),
                     examenFisico = rs.getString("ExamenFisico"),
                     procedimiento = rs.getString("Procedimiento"),
                     acompañante = rs.getString("Acompañante"),
                     relacion = rs.getString("Relacion");
+            Timestamp fechaHoraInicio = (Timestamp) rs.getObject("FechaHoraInicio"),
+                    fechaHoraFin = (Timestamp) rs.getObject("FechaHoraFin");
             boolean emergencia = rs.getBoolean("esEmergencia");
 
+            cm.setIdOperacion(idOperacion);
+            cm.setTipo(tipo);
+            cm.setIdMedicalVisit(idOperacion);
             cm.setIdConsulta(idConsulta);
             cm.setIdPersona1(idPersona1);
             cm.setIdPersona2(idPersona2);
-            // cm.setFechaHoraInicio(LocalTime.parse(fechaHoraInicio));
-            // cm.setFechaHoraFin(LocalTime.parse(fechaHoraFin));
+            cm.setFechaHoraInicio(fechaHoraInicio.toLocalDateTime());
+            cm.setFechaHoraFin(fechaHoraFin.toLocalDateTime());
             cm.setMotivos(motivos);
             cm.setExamenFisico(examenFisico);
             cm.setProcedimiento(procedimiento);
@@ -352,232 +356,361 @@ public class ConsultaDAOImpl implements IConsultaDAO {
             cm.setAcompañante(acompañante);
             cm.setRelacion(relacion);
 
-            //Consulta: Antecedentes o Diagnosticos
-            conexion.conectar();
-            cs2 = connection.prepareCall("{CALL readConsultaDiagnosticos(?)}");
-            cs2.setInt(1, idConsulta);
-            rs2 = cs2.executeQuery();
+            cm.setSignosVitales(readSignosVitales(idConsulta));
+            cm.setProximasConsultas(readCitas(idConsulta));
+            cm.setDiagnosticos(readDiagnosticos(idConsulta));
 
-            while (rs2.next()) {
-                String tipoAntecedente = rs2.getString("TipoAntecedente"),
-                        diagnostico = rs2.getString("Diagnostico"),
-                        cie10 = rs2.getString("CIE10");
+            cm.setOrden(readOrden(idConsulta));
 
-                String[] antecedente = {diagnostico, cie10};
-                if (tipoAntecedente.equals("Personal")) {
-                    cm.getDiagnosticos().get("Personales").add(antecedente);
-
-                } else if (tipoAntecedente.equals("Familiar")) {
-                    cm.getDiagnosticos().get("Familiares").add(antecedente);
-
-                }
-
-            }
-            cs2.close();
-
-            //Consulta: Signos Vitales
-            conexion.conectar();
-            cs2 = connection.prepareCall("{CALL readConsultaSignosVitales(?)}");
-            cs2.setInt(1, idConsulta);
-            rs2 = cs2.executeQuery();
-            rs2.next();
-            signos = cm.getSignosVitales();
-            signos.setPulso(rs2.getDouble("Pulso"));
-            signos.setFrecuenciaRespiratoria(rs2.getDouble("FrecuenciaRespiratoria"));
-            signos.setPresionSitolica(rs2.getDouble("PresionSistolica"));
-            signos.setPresionDiastolica(rs2.getDouble("PresionDiastolica"));
-            signos.setSaturacionOxigeno(rs2.getDouble("SaturacionOxigeno"));
-            signos.setTemperatura(rs2.getDouble("Temperatura"));
-            signos.setTalla(rs2.getDouble("Talla"));
-            signos.setPeso(rs2.getDouble("Peso"));
-            cs2.close();
-
-            //Consulta: Proximas Citas
-            conexion.conectar();
-            cs2 = connection.prepareCall("{CALL readConsultaCitas(?)}");
-            cs2.setInt(1, idConsulta);
-            rs2 = cs2.executeQuery();
-
-            while (rs2.next()) {
-                String fecha = String.valueOf(rs2.getObject("Fecha")),
-                        descripcion = rs2.getString("Descripcion");
-
-                String[] proxima = {fecha, descripcion};
-                cm.getProximasConsultas().add(proxima);
-            }
-            cs2.close();
-
-            //Consulta: Orden
-            conexion.conectar();
-            cs2 = connection.prepareCall("{CALL readConsultaOrden(?)}");
-            cs2.setInt(1, idConsulta);
-            rs2 = cs2.executeQuery();
-
-            rs2.next();
-            int idOrden = rs2.getInt("idOrden");
-            String fechaHora = String.valueOf(rs2.getObject("FechaHora")),
-                    descripcion = rs2.getString("Descripcion");
-
-            ord.setIdOrden(idOrden);
-            ord.setFechaHoraAsistencia(LocalDateTime.parse(fechaHora));
-            ord.setDescripcion(descripcion);
-
-            cs2.close();
-
-            //Considerar los parametros de los examnenes
-            ArrayList<String> parametros = ord.getParametros();
-
-            conexion.conectar();
-            cs2 = connection.prepareCall("{CALL readOrdenParametros(?)}");
-            cs2.setInt(1, idOrden);
-            rs2 = cs2.executeQuery();
-
-            while (rs2.next()) {
-                String parametro = rs2.getString("Parametro");
-                parametros.add(parametro);
-
-            }
-            cs2.close();
-
-            //Tratamiento
-            conexion.conectar();
-            cs2 = connection.prepareCall("{CALL readConsultaTratamiento(?)}");
-            cs2.setInt(1, idConsulta);
-            rs2 = cs2.executeQuery();
-
-            rs2.next();
-            int idTratamiento = rs2.getInt("idTratamiento");
-            String fechaInicio = String.valueOf(rs2.getObject("FechaInicio")),
-                    fechaFin = String.valueOf(rs2.getObject("FechaFin")),
-                    medicacion = rs2.getString("Medicacion"),
-                    indicaciones = rs2.getString("Indicaciones");
-            tm.setIdTratamiento(idTratamiento);
-            tm.setFechaInicio(LocalDate.parse(fechaInicio));
-            tm.setFechaFin(LocalDate.parse(fechaFin));
-            tm.setMedicacion(medicacion);
-            tm.setIndicaciones(indicaciones);
-            cs2.close();
-
-            //Tratamiento: Horario
-            conexion.conectar();
-            cs2 = connection.prepareCall("{CALL readTratamientoHorariosAcciones(?)}");
-            cs2.setInt(1, idTratamiento);
-            rs2 = cs2.executeQuery();
-
-            while (rs2.next()) {
-                String HoraHorario = String.valueOf(rs2.getObject("FechaHora")),
-                        HoraEjecucion = String.valueOf(rs2.getObject("FechaHoraEjeucion"));
-                int idActivity = rs2.getInt("idActivity");
-                Horario horario = new Horario();
-                horario.setHora(LocalTime.parse(HoraHorario));
-
-                //  ArrayList<Accion> horariosAcciones = horario.getHorariosAcciones();
-                //Horario: AdmiMedicinas
-                conexion.conectar();
-                cs3 = connection.prepareCall("{CALL readAdmiMedicinaTomasMedicinasProductos(?)}");
-                cs3.setInt(1, idActivity);
-                rs3 = cs3.executeQuery();
-                while (rs3.next()) {
-
-                    String condicionComida = rs3.getString("CondicionComida"),
-                            nombreComercial = rs3.getString("NombreComercial"),
-                            presentacion = rs3.getString("Presentacion"),
-                            laboratorio = rs3.getString("Laboratorio");
-                    int cantidad = rs3.getInt("Cantidad");
-
-                    if (nombreComercial != null) {//Validando que exista un AdmiMedicina en ese horario
-                        AdmiMedicina am = new AdmiMedicina();
-                        Producto p = new Producto();
-                        p.setNombreComercial(nombreComercial);
-                        p.setPresentacion(presentacion);
-                        p.setLaboratorio(laboratorio);
-                        p.setCantidad(cantidad);
-
-                        //  am.setHoraEjecucion(LocalTime.parse(HoraEjecucion));
-                        //  am.setCondicionComida(condicionComida);
-                        am.getMedicamentos().add(p);
-                        horario.setCondicionComida(condicionComida);
-
-                        //  horariosAcciones.add(am);
-                    } else {
-                        break;
-                    }
-
-                }
-                cs3.close();
-
-                //Horario: MedicionGlucosa
-                conexion.conectar();
-                cs3 = connection.prepareCall("{CALL readHorarioAccionMedicionGlucosa(?)}");
-                cs3.setInt(1, idActivity);
-                rs3 = cs3.executeQuery();
-                while (rs3.next()) {
-
-                    String condicionComida = rs3.getString("CondicionComida");
-
-                    double glucosa = rs3.getDouble("Glucosa");
-
-                    if (condicionComida != null) {//Validando que exista una MedicionGlucosa en ese horario
-                        MedicionGlucosa mg = new MedicionGlucosa();
-
-                        //  mg.setHoraEjecucion(LocalTime.parse(HoraEjecucion));//puede ser nula sino se ha realizado
-                        // mg.setCondicionComida(condicionComida);
-                        mg.setGlucosa(glucosa);//puede ser nula sino se ha realizado
-                        horario.setCondicionComida(condicionComida);
-
-                        // horariosAcciones.add(mg);
-                    } else {
-                        break;
-                    }
-
-                }
-                cs3.close();
-
-                //Horario: MedicionPA
-                conexion.conectar();
-                cs3 = connection.prepareCall("{CALL readHorarioAccionMedicionPA(?)}");
-                cs3.setInt(1, idActivity);
-                rs3 = cs3.executeQuery();
-                while (rs3.next()) {
-
-                    String condicionComida = rs3.getString("CondicionComida");
-                    double presionSistolica = rs3.getDouble("PresionSistolica"),
-                            presionDiastolica = rs3.getDouble("PersionDiastolica"),
-                            pulso = rs3.getDouble("Pulso");
-
-                    if (condicionComida != null) {//Validando que exista una MedicionPA en ese horario
-                        MedicionPA mpa = new MedicionPA();
-
-                        // mpa.setHoraEjecucion(LocalTime.parse(HoraEjecucion));//puede ser nula sino se ha realizado
-                        // mpa.setCondicionComida(condicionComida);
-                        mpa.setPresionSistolica(presionSistolica);//puede ser nula sino se ha realizado
-                        mpa.setPresionDiastolica(presionDiastolica);//puede ser nula sino se ha realizado
-                        mpa.setPulso(pulso);//puede ser nula sino se ha realizado
-                        horario.setCondicionComida(condicionComida);
-                        // horariosAcciones.add(mpa);
-                    } else {
-                        break;
-                    }
-
-                }
-                cs3.close();
-                //tm.getActividades().add(horario);
-
-            }
-            cs2.close();
-
+            tm = readTratamientoSinHorarios(idConsulta);//tratamiento sin horarios
+            int idTratamiento = tm.getIdTratamiento();
+            tm.setHorarios(readTratamientoHorarios(idTratamiento));
             cm.setTratamiento(tm);
             consultasObtenidas.add(cm);
         }
-        cs.close();
 
         conexion.desconectar();
         return consultasObtenidas;
+
     }
 
+    private SignosVitales readSignosVitales(int idConsulta) throws Exception {
+
+        signos = new SignosVitales();
+        cs2 = connection.prepareCall("{CALL readConsultaSignosVitales(?)}");
+        cs2.setInt(1, idConsulta);
+        rs2 = cs2.executeQuery();
+        rs2.next();
+        int idSignosVitales = rs2.getInt("idSignosVitales");
+        double pulso = rs2.getDouble("Pulso"),
+                frecuenciaRespiratoria = rs2.getDouble("FrecuenciaRespiratoria"),
+                presionSistolica = rs2.getDouble("PresionSistolica"),
+                presionDiastolica = rs2.getDouble("PresionDiastolica"),
+                saturacionOxigeno = rs2.getDouble("SaturacionOxigeno"),
+                temperatura = rs2.getDouble("Temperatura"),
+                talla = rs2.getDouble("Talla"),
+                peso = rs2.getDouble("Peso");
+
+        signos.setIdSignosVitales(idSignosVitales);
+        signos.setIdVitalSigns(idConsulta);
+        signos.setPulso(pulso);
+        signos.setFrecuenciaRespiratoria(frecuenciaRespiratoria);
+        signos.setPresionSistolica(presionSistolica);
+        signos.setPresionDiastolica(presionDiastolica);
+        signos.setSaturacionOxigeno(saturacionOxigeno);
+        signos.setTemperatura(temperatura);
+        signos.setTalla(talla);
+        signos.setPeso(peso);
+
+        return signos;
+    }
+
+    private ArrayList<String[]> readCitas(int idConsulta) throws Exception {
+        proximasConsultas = new ArrayList<>();
+        cs2 = connection.prepareCall("{CALL readConsultaCitas(?)}");
+        cs2.setInt(1, idConsulta);
+        rs2 = cs2.executeQuery();
+        while (rs2.next()) {
+            Date fecha = (Date) rs2.getObject("Fecha");
+            String descripcion = rs2.getString("Descripcion");
+
+            String[] pc = {String.valueOf(fecha), descripcion};
+            proximasConsultas.add(pc);
+        }
+
+        return proximasConsultas;
+
+    }
+
+    private Orden readOrden(int idConsulta) throws Exception {
+        ord = new Orden();
+
+        cs2 = connection.prepareCall("{CALL readConsultaOrden(?)}");
+        cs2.setInt(1, idConsulta);
+        rs2 = cs2.executeQuery();
+
+        rs2.next();
+        int idOrden = rs2.getInt("idOrden");
+        Timestamp fechaHoraAsistencia = (Timestamp) rs2.getObject("FechaHoraAsistencia");
+        String descripcion = rs2.getString("Descripcion");
+        ord.setIdOrden(idOrden);
+        ord.setIdOrder(idConsulta);
+        ord.setFechaHoraAsistencia(fechaHoraAsistencia.toLocalDateTime());
+        ord.setDescripcion(descripcion);
+        ord.setParametros(readOrdenParametros(idOrden));
+        return ord;
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    private ArrayList<String> readOrdenParametros(int idOrden) throws Exception {
+        parametros = new ArrayList<>();
+        cs3 = connection.prepareCall("{CALL readOrdenParametros(?)}");
+        cs3.setInt(1, idOrden);
+        rs3 = cs3.executeQuery();
+
+        while (rs3.next()) {
+            parametros.add(rs3.getString("Parametro"));
+        }
+
+        return parametros;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    private HashMap<String, ArrayList<String[]>> readDiagnosticos(int idConsulta) throws Exception {
+        diagnosticos = new HashMap<>();
+        diagnosticos.put("Personales", new ArrayList<>());
+        diagnosticos.put("Familiares", new ArrayList<>());
+
+        cs2 = connection.prepareCall("{CALL readConsultaDiagnosticos(?)}");
+        cs2.setInt(1, idConsulta);
+        rs2 = cs2.executeQuery();
+
+        while (rs2.next()) {
+            String diagnostico = rs2.getString("Diagnostico"),
+                    cie10 = rs2.getString("CIE10"),
+                    tipoAntecedente = rs2.getString("TipoAntecedente");
+            String[] d = {diagnostico, cie10};
+            if (tipoAntecedente.equals("Personal")) {
+                (diagnosticos.get("Personales")).add(d);
+            } else if (tipoAntecedente.equals("Familiar")) {
+                (diagnosticos.get("Familiares")).add(d);
+            }
+
+        }
+
+        return diagnosticos;
+    }
+
+    private Tratamiento readTratamientoSinHorarios(int idConsulta) throws Exception {
+        tm2 = new Tratamiento();
+        cs2 = connection.prepareCall("{CALL readConsultaTratamiento(?)}");
+        cs2.setInt(1, idConsulta);
+        rs2 = cs2.executeQuery();
+
+        rs2.next();
+
+        int idTratamiento = rs2.getInt("idTratamiento"),
+                idSufferer = rs2.getInt("idSufferer");
+
+        Date fechaInicio = (Date) rs2.getObject("FechaInicio"),
+                fechaFin = (Date) rs2.getObject("FechaFin");
+        String medicacion = rs2.getString("Medicacion"),
+                indicaciones = rs2.getString("Indicaciones");
+
+        tm2.setIdTratamiento(idTratamiento);
+        tm2.setIdTreatment(idConsulta);
+        tm2.setIdSufferer(idSufferer);
+        tm2.setFechaInicio(fechaInicio.toLocalDate());
+        tm2.setFechaFin(fechaFin.toLocalDate());
+        tm2.setFechas();
+        tm2.setMedicacion(medicacion);
+        tm2.setIndicaciones(indicaciones);
+
+        return tm2;
+    }
+
+    private ArrayList<Horario> readTratamientoHorarios(int idTratamiento) throws Exception {
+
+        horarios = new ArrayList<>();
+        cs2 = connection.prepareCall("{CALL readTratamientoHorarios(?)}");
+        cs2.setInt(1, idTratamiento);
+        rs2 = cs2.executeQuery();
+
+        while (rs2.next()) {
+
+            int idHorario = rs2.getInt("idHorario");
+            Time hora = (Time) rs2.getObject("Hora");
+            String condicionComida = rs2.getString("CondicionComida");
+            horario = new Horario();
+            horario.setIdHorario(idHorario);
+            horario.setHora(hora.toLocalTime());
+            horario.setCondicionComida(condicionComida);
+
+            horario.setAccionesHorarios(readHorarioAcciones(idHorario));
+            System.out.println("Horario: "+horario);
+            horarios.add(horario);
+        }
+
+        return horarios;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    private ArrayList<HorarioAccion> readHorarioAcciones(int idHorario) throws Exception {
+        horariosAcciones = new ArrayList<>();
+        cs3 = connection.prepareCall("{CALL readHorariosAcciones(?)}");
+        cs3.setInt(1, idHorario);
+        rs3 = cs3.executeQuery();
+
+        while (rs3.next()) {
+
+            int idHorarioAccion = rs3.getInt("idHorarioAccion"),
+                    idActivity = rs3.getInt("idActivity");
+            Date fecha = (Date) rs3.getObject("Fecha");
+            Time horaEjecucion = (Time) rs3.getObject("HoraEjecucion");
+            horarioAccion = new HorarioAccion();
+            horarioAccion.setIdHorarioAccion(idHorarioAccion);
+            horarioAccion.setFecha(fecha.toLocalDate());
+            horarioAccion.setIdActivity(idActivity);
+            if (horaEjecucion != null) {
+                horarioAccion.setHoraEjecucion(horaEjecucion.toLocalTime());
+            }
+            horarioAccion.setAccion(readAccion(idActivity));
+            horariosAcciones.add(horarioAccion);
+        }
+
+        return horariosAcciones;
+    }
+
+    private Accion readAccion(int idActivity) throws Exception {
+        cs4 = connection.prepareCall("{CALL readAccion(?)}");
+        cs4.setInt(1, idActivity);
+        rs4 = cs4.executeQuery();
+        rs4.next();
+        int idAccion = rs4.getInt("idAccion");
+        String tipo = rs4.getString("Tipo");
+
+        if (tipo.equals("MedicionPA")) {
+            cs5 = connection.prepareCall("{CALL readAccionMedicionPA(?)}");
+            cs5.setInt(1, idAccion);
+            rs5 = cs5.executeQuery();
+            rs5.next();
+
+            int idMedicionPA = rs5.getInt("idMedicionPA");
+            double presionSistolica = rs5.getDouble("PresionSistolica"),
+                    presionDiastolica = rs5.getDouble("PresionDiastolica"),
+                    pulso = rs5.getDouble("Pulso");
+            mpa = new MedicionPA();
+            mpa.setIdAccion(idAccion);
+            mpa.setIdMeasurePA(idAccion);
+            mpa.setIdMedicionPA(idMedicionPA);
+            mpa.setPresionSistolica(presionSistolica);
+            mpa.setPresionDiastolica(presionDiastolica);
+            mpa.setPulso(pulso);
+            accion = mpa;
+
+        } else if (tipo.equals("MedicionGlucosa")) {
+            cs5 = connection.prepareCall("{CALL readAccionMedicionGlucosa(?)}");
+            cs5.setInt(1, idAccion);
+            rs5 = cs5.executeQuery();
+            rs5.next();
+
+            int idMedicionGlucosa = rs5.getInt("idMedicionGlucosa");
+            double glucosa = rs5.getDouble("Glucosa");
+            mg = new MedicionGlucosa();
+            mg.setIdAccion(idAccion);
+            mg.setIdMeasureGlucose(idMedicionGlucosa);
+            mg.setIdMedicionGlucosa(idMedicionGlucosa);
+            mg.setGlucosa(glucosa);
+            accion = mg;
+
+        } else if (tipo.equals("AdmiMedicina")) {
+            cs5 = connection.prepareCall("{CALL readAccionAdmiMedicina(?)}");
+            cs5.setInt(1, idAccion);
+            rs5 = cs5.executeQuery();
+            rs5.next();
+
+            int idAdmiMedicina = rs5.getInt("idAdmiMedicina");
+            am = new AdmiMedicina();
+            am.setIdAccion(idAccion);
+            am.setIdAdmiMedicine(idAccion);
+            am.setIdAdmiMedicina(idAdmiMedicina);
+            am.setMedicamentos(readTomaMedicinaProductos(idAdmiMedicina));
+            accion = am;
+
+        }
+
+        return accion;
+    }
+
+    private ArrayList<Producto> readTomaMedicinaProductos(int idTake) throws Exception {
+        medicamentos = new ArrayList<>();
+        cs6 = connection.prepareCall("{CALL readTomaMedicinaProductos(?)}");
+        cs6.setInt(1, idTake);
+        rs6 = cs6.executeQuery();
+        while (rs6.next()) {
+            int idProducto = rs6.getInt("idProducto"),
+                    cantidad = rs6.getInt("Cantidad");
+            String nombreComercial = rs6.getString("NombreComercial"),
+                    presentacion = rs6.getString("Presentacion"),
+                    laboratorio = rs6.getString("Laboratorio");
+
+            medicamento = new Producto();
+            medicamento.setIdProducto(idProducto);
+            medicamento.setCantidad(cantidad);
+            medicamento.setNombreComercial(nombreComercial);
+            medicamento.setPresentacion(presentacion);
+            medicamento.setLaboratorio(laboratorio);
+
+            medicamentos.add(medicamento);
+
+        }
+
+        return medicamentos;
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
     @Override
-    public ArrayList<ConsultaMedica> readOne(String cedulaNombre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<ConsultaMedica> readAllConsultasFecha(LocalDate fecha) throws Exception {
+
+        consultasObtenidas = new ArrayList<>();
+        cs = connection.prepareCall("{CALL readFechaConsulta(?)}");
+        cs.setObject(1, fecha);
+        rs = cs.executeQuery();
+
+        //Operacion-ConsultaMedica
+        while (rs.next()) {
+            cm = new ConsultaMedica();
+            ord = new Orden();
+            tm = new Tratamiento();
+            int idOperacion = rs.getInt("idOperacion"),
+                    idPersona1 = rs.getInt("idPerson1"),
+                    idPersona2 = rs.getInt("idPerson2"),
+                    idConsulta = rs.getInt("idConsulta");
+            System.out.println("idOperacion: " + idOperacion);
+
+            String tipo = rs.getString("Tipo"),
+                    motivos = rs.getString("Motivos"),
+                    examenFisico = rs.getString("ExamenFisico"),
+                    procedimiento = rs.getString("Procedimiento"),
+                    acompañante = rs.getString("Acompañante"),
+                    relacion = rs.getString("Relacion");
+            Timestamp fechaHoraInicio = (Timestamp) rs.getObject("FechaHoraInicio"),
+                    fechaHoraFin = (Timestamp) rs.getObject("FechaHoraFin");
+            boolean emergencia = rs.getBoolean("esEmergencia");
+
+            cm.setIdOperacion(idOperacion);
+            cm.setTipo(tipo);
+            cm.setIdMedicalVisit(idOperacion);
+            cm.setIdConsulta(idConsulta);
+            cm.setIdPersona1(idPersona1);
+            cm.setIdPersona2(idPersona2);
+            cm.setFechaHoraInicio(fechaHoraInicio.toLocalDateTime());
+            cm.setFechaHoraFin(fechaHoraFin.toLocalDateTime());
+            cm.setMotivos(motivos);
+            cm.setExamenFisico(examenFisico);
+            cm.setProcedimiento(procedimiento);
+            cm.setEmergency(emergencia);
+            cm.setAcompañante(acompañante);
+            cm.setRelacion(relacion);
+
+            cm.setSignosVitales(readSignosVitales(idConsulta));
+            cm.setProximasConsultas(readCitas(idConsulta));
+            cm.setDiagnosticos(readDiagnosticos(idConsulta));
+
+            cm.setOrden(readOrden(idConsulta));
+
+            tm = readTratamientoSinHorarios(idConsulta);//tratamiento sin horarios
+            int idTratamiento = tm.getIdTratamiento();
+            tm.setHorarios(readTratamientoHorarios(idTratamiento));
+            cm.setTratamiento(tm);
+            consultasObtenidas.add(cm);
+        }
+
+        conexion.desconectar();
+        return consultasObtenidas;
+
     }
 
 }

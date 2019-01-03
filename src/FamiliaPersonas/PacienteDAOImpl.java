@@ -9,9 +9,9 @@ import BaseDeDatos.Conexion;
 import Extra.Validate;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -21,9 +21,12 @@ public class PacienteDAOImpl implements IPacienteDAO {
 
     private final Conexion conexion = Conexion.getInstancia();
     private final Connection connection = conexion.getConnection();
+    private final Validate validate = new Validate();
     private CallableStatement cs;
     private ResultSet rs;
-    private HashMap<Paciente, Object> mapaPaciente;
+    private Paciente paciente;
+    private ArrayList<String> telefonos, correos, ocupaciones;
+    private ArrayList<String[]> domicilios;
 
     @Override
     public void create(Paciente paciente) throws Exception {
@@ -78,41 +81,109 @@ public class PacienteDAOImpl implements IPacienteDAO {
             cs.executeQuery();
             cs.close();
         }
-        
+
         conexion.desconectar();
         System.out.println("Creación de paciente exitoso!");
 
     }
 
     @Override
-    public HashMap<Paciente, Object> read(String cedulaNombre) throws Exception {
-        mapaPaciente = new HashMap<>();
-        if (Validate.isNumeric(cedulaNombre)) {
+    public Paciente read(String cedulaNombre) throws Exception {
+        paciente = new Paciente();
+        String idPersona = "";
+        if (!Validate.isNumeric(cedulaNombre)) {
+            idPersona = validate.obtenerIdPersonaNombre(cedulaNombre);
+        } else {
+            idPersona = cedulaNombre;
+        }
 
-            conexion.conectar();
-            cs = connection.prepareCall("{CALL readPacienteCedula_OrdenesParametros(?)}");
-            cs.setString(1, cedulaNombre);
-            rs = cs.executeQuery();
-            while (rs.next()) {
-                int idOrden = rs.getInt("idOrden");
-                String fechaHora = String.valueOf(rs.getDate("FechaHora"));
-                String descripcion = rs.getString("Descripcion");
+        cs = connection.prepareCall("{CALL readPersona(?)}");
+        cs.setString(1, idPersona);
+        rs = cs.executeQuery();
+        rs.next();
+        int nroHistoria=rs.getInt("nroHistoria");
+        String nombre = rs.getString("Nombre"),
+                genero = rs.getString("Genero"),
+                estadoCivil = rs.getString("EstadoCivil"),
+                grupoSanguineo = rs.getString("GrupoSanguineo");
+        Date fechaNacimiento=(Date)rs.getObject("FechaNacimiento");
+        
+        paciente.setIdPersona(idPersona);
+        paciente.setNroHistoria(nroHistoria);
+        paciente.setIdPatient(idPersona);
+        paciente.setNombre(nombre);
+        paciente.setFechaNacimiento(fechaNacimiento.toLocalDate());
+        paciente.setTipo("Paciente");
+        paciente.setGenero(genero);
+        paciente.setEstadoCivil(estadoCivil);
+        paciente.setGrupoSanguineo(grupoSanguineo);
+        paciente.setTelefonos(readTelefonos(idPersona));
+        paciente.setCorreos(readCorreos(idPersona));
+        paciente.setDomicilios(readDomicilios(idPersona));
+        paciente.setCorreos(readCorreos(idPersona));
+        paciente.setOcupaciones(readPacienteOcupaciones(idPersona));
+        
 
-                HashMap<String, Object> mapaInterno1 = new HashMap<>();
-                HashMap<String, ArrayList<String>> mapaInterno2 = new HashMap<>();
+        cs.close();
 
-                mapaInterno1.put("FechaHora", fechaHora);
-                mapaInterno1.put("Descripcion", descripcion);
-                mapaInterno1.put("Examenes", mapaInterno2);
+        conexion.desconectar();
 
-                //mapaPaciente.put(idOrden,mapaInterno1);
-            }
-            cs.close();
+        return paciente;
+    }
 
-            conexion.desconectar();
+    private ArrayList<String> readTelefonos(String idPersona) throws Exception {
+        telefonos = new ArrayList<>();
+        cs = connection.prepareCall("{CALL readPersonaTelefonos(?)}");
+        cs.setString(1, idPersona);
+        rs = cs.executeQuery();
+        while (rs.next()) {
+            String telefono = rs.getString("Telefono");
+            telefonos.add(telefono);
 
         }
-        return null;
+
+        return telefonos;
+    }
+
+    private ArrayList<String> readCorreos(String idPersona) throws Exception {
+        correos = new ArrayList<>();
+        cs = connection.prepareCall("{CALL readPersonaCorreos(?)}");
+        cs.setString(1, idPersona);
+        rs = cs.executeQuery();
+        while (rs.next()) {
+            String correo = rs.getString("Correo");
+            correos.add(correo);
+        }
+
+        return correos;
+    }
+
+    private ArrayList<String[]> readDomicilios(String idPersona) throws Exception {
+        domicilios = new ArrayList<>();
+        cs = connection.prepareCall("{CALL readPersonaDomicilios(?)}");
+        cs.setString(1, idPersona);
+        rs = cs.executeQuery();
+        while (rs.next()) {
+            String ciudad = rs.getString("Ciudad"),
+                    direccion = rs.getString("Direccion");
+            String[] domicilio = {ciudad, direccion};
+
+            domicilios.add(domicilio);
+        }
+
+        return domicilios;
+    }
+
+    private ArrayList<String> readPacienteOcupaciones(String idPersona) throws Exception {
+        ocupaciones = new ArrayList<>();
+        cs = connection.prepareCall("{CALL readPacienteOcupaciones(?)}");
+        cs.setString(1, idPersona);
+        rs = cs.executeQuery();
+        while (rs.next()) {
+            ocupaciones.add(rs.getString("Ocupacion"));
+        }
+        return ocupaciones;
+
     }
 
     @Override

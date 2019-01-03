@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package FamiliaPersonas;
 
 import java.util.ArrayList;
 
 /**
- * 
+ *
  * @author Luis A. Sarango-Parrales
  */
-public abstract class Persona{
+public abstract class Persona {
+
     protected String idPersona, nombre, tipo;
     protected ArrayList<String> telefonos, correos;
     protected ArrayList<String[]> domicilios;
-    
+
     public String getIdPersona() {
         return idPersona;
     }
@@ -53,10 +53,6 @@ public abstract class Persona{
         return correos;
     }
 
-    public void setEmails(ArrayList<String> correos) {
-        this.correos = correos;
-    }
-
     public ArrayList<String[]> getDomicilios() {
         return domicilios;
     }
@@ -64,7 +60,9 @@ public abstract class Persona{
     public void setDomicilios(ArrayList<String[]> domicilios) {
         this.domicilios = domicilios;
     }
-    
-    
+
+    public void setCorreos(ArrayList<String> correos) {
+        this.correos = correos;
+    }
 
 }

@@ -16,9 +16,10 @@ import java.util.ArrayList;
 public class Horario {
 
     private int idHorario, idSchedule;
-    private LocalTime Hora;
+    private LocalTime hora;
     private String condicionComida;
     private ArrayList<Accion> acciones = new ArrayList<>();
+    private ArrayList<HorarioAccion> accionesHorarios = new ArrayList<>();
 
     public int getIdHorario() {
         return idHorario;
@@ -37,11 +38,11 @@ public class Horario {
     }
 
     public LocalTime getHora() {
-        return Hora;
+        return hora;
     }
 
-    public void setHora(LocalTime Hora) {
-        this.Hora = Hora;
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
     }
 
     public String getCondicionComida() {
@@ -60,11 +61,18 @@ public class Horario {
         this.acciones = acciones;
     }
 
-    @Override
-    public String toString() {
-        return "Horario{" + "idHorario=" + idHorario + ", idSchedule=" + idSchedule + ", Hora=" + Hora + ", condicionComida=" + condicionComida + ", acciones=" + acciones + '}';
+    public ArrayList<HorarioAccion> getAccionesHorarios() {
+        return accionesHorarios;
     }
 
-    
+    public void setAccionesHorarios(ArrayList<HorarioAccion> accionesHorarios) {
+        this.accionesHorarios = accionesHorarios;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Horario{" + "idHorario=" + idHorario + ", idSchedule=" + idSchedule + ", hora=" + hora + ", condicionComida=" + condicionComida + ", acciones=" + acciones + ", accionesHorarios=" + accionesHorarios + '}';
+    }
 
 }

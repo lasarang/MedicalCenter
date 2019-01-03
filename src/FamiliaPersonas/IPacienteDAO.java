@@ -6,7 +6,7 @@
 package FamiliaPersonas;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 /**
  *
@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public interface IPacienteDAO {
     public void create(Paciente paciente) throws Exception;
-    public HashMap<Paciente, Object> read(String cedulaNombre) throws Exception;
+    public Paciente read(String cedulaNombre) throws Exception;
     public void update(String cedulaNombre, ArrayList<String[]> nuevosValores) throws Exception;
     public void delete(String cedulaNombre) throws Exception;
 }

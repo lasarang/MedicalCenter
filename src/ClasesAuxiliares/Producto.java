@@ -11,8 +11,8 @@ package ClasesAuxiliares;
  */
 public class Producto {
 
-    private String nombreComercial, presentacion, laboratorio;
     private int idProducto, cantidad;
+    private String nombreComercial, presentacion, laboratorio;
     private double precioUnitarioVenta;
 
     public String getNombreComercial() {

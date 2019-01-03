@@ -10,7 +10,6 @@ import BaseDeDatos.Conexion;
 import ClasesAuxiliares.FabricaAbstracta;
 import ClasesAuxiliares.FabricaProductor;
 import ClasesAuxiliares.Horario;
-import ClasesAuxiliares.HorarioAccion;
 import ClasesAuxiliares.Orden;
 import FamiliaPersonas.Paciente;
 import FamiliaPersonas.PacienteDAOImpl;
@@ -89,7 +88,7 @@ public class AppMedicalCenter extends Application {
             paciente.setFechaNacimiento(LocalDate.parse("1995-08-06"));
 
             paciente.setNroHistoria(Integer.parseInt(validate.ultimoId("Pacientes")) + 1);
-            paciente.setEmails(correos);
+            paciente.setCorreos(correos);
             paciente.setDomicilios(domicilios);
             paciente.setTelefonos(telefonos);
             paciente.setOcupaciones(ocupaciones);
@@ -97,7 +96,7 @@ public class AppMedicalCenter extends Application {
             paciente.setTipo("Paciente");
             paciente.setGrupoSanguineo("B+");
 
-            pdao.create(paciente);
+            //pdao.create(paciente);
             //Consulta de medicamentos
             System.out.println(pdtdao.readNombre("Gluco").toString());
             System.out.println(pdtdao.readNombreLab("A", "M"));
@@ -105,13 +104,13 @@ public class AppMedicalCenter extends Application {
             String cedulaDoctor = "1102371802", psw = "mesigyna";
             int idMedico = validate.esUsuarioMedico(cedulaDoctor, psw),//Validando y obteniendo el idMedico del doctor
                     idConsulta = Integer.parseInt(validate.ultimoId("ConsultasMedicas")) + 1;
-            // se debe guardar aparte para no aumentar el id en los demas campos
+            //se debe guardar aparte para no aumentar el id en los demas campos
 
             //Creacion de una consulta medica
             ConsultaMedica consulta = new ConsultaMedica();//Si no existe el paciente no se puede iniciar sin registrarlo primero
             consulta.setIdOperacion(Integer.parseInt(validate.ultimoId("Operaciones")) + 1);
             consulta.setIdPersona1(idMedico);//idMedico
-            consulta.setIdPersona2(validate.obtenerNroHistoria("0913499742"));//nroHistoria
+            consulta.setIdPersona2(validate.obtenerNroHistoriaCedula("0913499742"));//nroHistoria
             consulta.setIdConsulta(idConsulta);
             consulta.setFechaHoraInicio(LocalDateTime.parse("2018-12-29 19:44:44", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             consulta.setFechaHoraFin(LocalDateTime.parse("2018-12-29 20:30:07", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -129,7 +128,7 @@ public class AppMedicalCenter extends Application {
             signos.setIdVitalSigns(idConsulta);
             signos.setPulso(80);//latidos/min
             signos.setFrecuenciaRespiratoria(14);//veces/min
-            signos.setPresionSitolica(120);//mmHg
+            signos.setPresionSistolica(120);//mmHg
             signos.setPresionDiastolica(80);
             signos.setSaturacionOxigeno(0.95);//%
             signos.setTemperatura(37);//c
@@ -143,7 +142,7 @@ public class AppMedicalCenter extends Application {
 
             ArrayList<String[]> familiares = new ArrayList<>(),
                     personales = new ArrayList<>();
-            String[] df1 = {"Diabetes Tipo II", "E10"}, //patologia, cie10
+            String[] df1 = {"Diabetes Tipo II", "E10"}, //diagnostico, cie10
                     df2 = {"Hipertension Tipo I", "I10"},
                     df3 = {"Alzhaimer", "G30"},
                     df4 = {"Astigmatismo", "H52.2"},
@@ -194,11 +193,6 @@ public class AppMedicalCenter extends Application {
 
             orden.setParametros(parametros);
             consulta.setOrden(orden);
-            
-            
-            
-            
-            
 
             //Tratamiento
             int idTratamiento = Integer.parseInt(validate.ultimoId("Tratamientos")) + 1;
@@ -208,13 +202,15 @@ public class AppMedicalCenter extends Application {
             tratamiento.setIdTreatment(idConsulta);
             tratamiento.setFechaInicio(LocalDate.parse("2018-12-31"));
             tratamiento.setFechaFin(LocalDate.parse("2019-01-31"));
-            System.out.println("Cantidad de dias tratamiento: "+tratamiento.getFechas().size());
+            tratamiento.setFechas();
+            //necesario para generar los dias del tratamiento despues de setear la fecha inicio y fin
+
             tratamiento.setMedicacion("Tiazolidinedionas, Sulfonilureas, Antialérgicos");
             tratamiento.setIndicaciones("Se deben tomar 2 tabletas cada doce horas una antes de la comida y otra después, así mismo debe de realizar una medición de glucosa presión arterial junto a cada toma.");
             consulta.setTratamiento(tratamiento);
 
             ArrayList<Horario> horarios = new ArrayList<>();
-            
+
             /////////////////////////////////////////////////////////////////////////////////////////
             //1er Horario
             Horario h1 = new Horario();
@@ -225,7 +221,7 @@ public class AppMedicalCenter extends Application {
             h1.setIdSchedule(idTratamiento);
             h1.setHora(LocalTime.parse("07:15:00"));
             h1.setCondicionComida("AntesComida");
- 
+
             /////////////////////////////////////////////////////////////////////////////////////////
             int idAccionMg1 = Integer.parseInt(validate.ultimoId("Acciones")) + 1;
             MedicionGlucosa mg1 = new MedicionGlucosa();
@@ -243,30 +239,26 @@ public class AppMedicalCenter extends Application {
             //mpa1.setPresionSistolica(0);
             //mpa1.setPulso(0);
 
-          
             int idAccionAm1 = Integer.parseInt(validate.ultimoId("Acciones")) + 1;
             AdmiMedicina am1 = new AdmiMedicina();
             am1.setIdAccion(idAccionAm1);
             am1.setIdAdmiMedicina(Integer.parseInt(validate.ultimoId("AdmiMedicinas")) + 1);
             am1.setIdAdmiMedicine(idAccionAm1);
             am1.setMedicamentos(pdtdao.readNombre("M"));//medicamentos
-            
-            
+
             acciones1.add(mg1);
             acciones1.add(mpa1);
             acciones1.add(am1);
             h1.setAcciones(acciones1);
-           
-            
+
             horarios.add(h1);
-            
+
             /////////////////////////////////////////////////////////////////////////////////////////
-            
             //2do Horario
             Horario h2 = new Horario();
             ArrayList<Accion> acciones2 = new ArrayList<>();
             int idHorario2 = Integer.parseInt(validate.ultimoId("Horarios")) + 1;
-            
+
             h2.setIdHorario(idHorario2);
             h2.setIdHorario(Integer.parseInt(validate.ultimoId("Horarios")) + 1);
             h2.setIdSchedule(idTratamiento);
@@ -281,20 +273,18 @@ public class AppMedicalCenter extends Application {
             mg2.setIdMeasureGlucose(idAccionMg2);
             mg2.setGlucosa(0);
 
-            
             int idAccionAm2 = Integer.parseInt(validate.ultimoId("Acciones")) + 1;
             AdmiMedicina am2 = new AdmiMedicina();
             am2.setIdAccion(idAccionAm2);
             am2.setIdAdmiMedicina(Integer.parseInt(validate.ultimoId("AdmiMedicinas")) + 1);
             am2.setIdAdmiMedicine(idAccionAm2);
             am2.setMedicamentos(pdtdao.readNombre("Gluco"));//medicamentos
-            
+
             acciones2.add(mg2);
             acciones2.add(am2);
-            
+
             h2.setAcciones(acciones2);
-            
-       
+
             horarios.add(h2);
             /////////////////////////////////////////////////////////////////////////////////////////
             //3er Horario
@@ -307,11 +297,11 @@ public class AppMedicalCenter extends Application {
             h3.setIdSchedule(idTratamiento);
             h3.setHora(LocalTime.parse("19:15:00"));
             h3.setCondicionComida("DespuesComida");
-            
+
             /////////////////////////////////////////////////////////////////////////////////////////
             int idAccionMpa3 = Integer.parseInt(validate.ultimoId("Acciones")) + 1;
             MedicionPA mpa3 = new MedicionPA();
-            
+
             mpa3.setIdAccion(idAccionMpa3);
             mpa3.setIdMedicionPA(idAccionMpa3);
             mpa3.setIdMeasurePA(idAccionMpa3);
@@ -319,29 +309,30 @@ public class AppMedicalCenter extends Application {
             //mpa3.setPresionSistolica(0);
             //mpa3.setPulso(0);
 
-            
             int idAccionAm3 = Integer.parseInt(validate.ultimoId("Acciones")) + 1;
             AdmiMedicina am3 = new AdmiMedicina();
-           
+
             am3.setIdAccion(idAccionAm3);
             am3.setIdAdmiMedicina(Integer.parseInt(validate.ultimoId("AdmiMedicinas")) + 1);
             am3.setIdAccion(idAccionAm3);
             am3.setIdAdmiMedicine(idAccionAm3);
             am3.setMedicamentos(pdtdao.readNombreLab("A", "B"));//medicamentos
-            
-  
+
             acciones3.add(mpa3);
             acciones3.add(am3);
-            
+
             h3.setAcciones(acciones3);
-            
-           
+
             horarios.add(h3);
-            
+
             tratamiento.setHorarios(horarios);
             /////////////////////////////////////////////////////////////////////////////////////////
-            
-            cdao.create(consulta);
+
+
+            //cdao.create(consulta);
+            System.out.println(cdao.readAllConsultasPaciente("0913499742"));
+            //System.out.println(cdao.readAllConsultasFecha(LocalDate.parse("2018-12-29")));
+            //System.out.println(pdao.read("Diana Prince"));
 
         } catch (Exception ex) {
             System.out.println("No se pudo conectar " + ex);

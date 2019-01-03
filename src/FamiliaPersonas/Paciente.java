@@ -13,9 +13,10 @@ import java.util.ArrayList;
  * @author Luis A. Sarango-Parrales
  */
 public class Paciente extends Persona {
+
     private int nroHistoria;
     private LocalDate fechaNacimiento;
-    private String genero, estadoCivil, grupoSanguineo;
+    private String idPatient, genero, estadoCivil, grupoSanguineo;
     private ArrayList<String> ocupaciones;
 
     public int getNroHistoria() {
@@ -65,5 +66,20 @@ public class Paciente extends Persona {
     public void setOcupaciones(ArrayList<String> ocupaciones) {
         this.ocupaciones = ocupaciones;
     }
+
+    public String getIdPatient() {
+        return idPatient;
+    }
+
+    public void setIdPatient(String idPatient) {
+        this.idPatient = idPatient;
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente{" +"nombre="+nombre+", idPersona="+idPersona+", nroHistoria=" + nroHistoria + ", tipo="+tipo+", telefonos="+telefonos+", correos="+correos+", domicilios="+domicilios.toString()+", fechaNacimiento=" + fechaNacimiento + ", idPatient=" + idPatient + ", genero=" + genero + ", estadoCivil=" + estadoCivil + ", grupoSanguineo=" + grupoSanguineo + ", ocupaciones=" + ocupaciones + '}';
+    }
+
+   
 
 }

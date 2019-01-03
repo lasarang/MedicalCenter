@@ -12,7 +12,7 @@ package ClasesAuxiliares;
  */
 public class SignosVitales {
    private int idSignosVitales, idVitalSigns;
-   private double pulso, frecuenciaRespiratoria, presionSitolica, presionDiastolica,
+   private double pulso, frecuenciaRespiratoria, presionSistolica, presionDiastolica,
                   saturacionOxigeno, temperatura, talla, peso;
 
     public int getIdSignosVitales() {
@@ -47,12 +47,12 @@ public class SignosVitales {
         this.frecuenciaRespiratoria = frecuenciaRespiratoria;
     }
 
-    public double getPresionSitolica() {
-        return presionSitolica;
+    public double getPresionSistolica() {
+        return presionSistolica;
     }
 
-    public void setPresionSitolica(double presionSitolica) {
-        this.presionSitolica = presionSitolica;
+    public void setPresionSistolica(double presionSistolica) {
+        this.presionSistolica = presionSistolica;
     }
 
     public double getPresionDiastolica() {
@@ -93,6 +93,11 @@ public class SignosVitales {
 
     public void setPeso(double peso) {
         this.peso = peso;
+    }
+
+    @Override
+    public String toString() {
+        return "SignosVitales{" + "idSignosVitales=" + idSignosVitales + ", idVitalSigns=" + idVitalSigns + ", pulso=" + pulso + ", frecuenciaRespiratoria=" + frecuenciaRespiratoria + ", presionSistolica=" + presionSistolica + ", presionDiastolica=" + presionDiastolica + ", saturacionOxigeno=" + saturacionOxigeno + ", temperatura=" + temperatura + ", talla=" + talla + ", peso=" + peso + '}';
     }
    
    

@@ -5,6 +5,7 @@
  */
 package FamiliaOperaciones;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public interface IConsultaDAO {
     
     public void create(ConsultaMedica consulta) throws Exception;
-    public ArrayList<ConsultaMedica>  readAll() throws Exception;
-    public ArrayList<ConsultaMedica> readOne(String cedulaNombre) throws Exception;
+    public ArrayList<ConsultaMedica>  readAllConsultasPaciente(String cedulaNombre) throws Exception;
+    public ArrayList<ConsultaMedica> readAllConsultasFecha(LocalDate fecha) throws Exception;
     
 }

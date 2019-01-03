@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Tratamiento {
 
-    private int idTratamiento, idTreatment;
+    private int idTratamiento, idTreatment, idSufferer;
     private LocalDate fechaInicio, fechaFin;
     private String medicacion, indicaciones;
     private ArrayList<LocalDate> fechas = new ArrayList<>();
@@ -78,16 +78,26 @@ public class Tratamiento {
     }
 
     public ArrayList<LocalDate> getFechas() {
-        this.fechas = Validate.getDates(fechaInicio, fechaFin);
         return fechas;
+    }
+
+    public void setFechas() {
+
+        this.fechas = Validate.getDates(fechaInicio, fechaFin);
+
+    }
+
+    public int getIdSufferer() {
+        return idSufferer;
+    }
+
+    public void setIdSufferer(int idSufferer) {
+        this.idSufferer = idSufferer;
     }
 
     @Override
     public String toString() {
-        return "Tratamiento{" + "idTratamiento=" + idTratamiento + ", idTreatment=" + idTreatment + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", medicacion=" + medicacion + ", indicaciones=" + indicaciones + ", fechas=" + fechas + ", horarios=" + horarios + '}';
+        return "Tratamiento{" + "idTratamiento=" + idTratamiento + ", idTreatment=" + idTreatment + ", idSufferer=" + idSufferer + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", medicacion=" + medicacion + ", indicaciones=" + indicaciones + ", fechas=" + fechas + ", horarios=" + horarios + '}';
     }
-    
-    
-    
 
 }
