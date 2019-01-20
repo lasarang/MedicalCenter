@@ -5,13 +5,14 @@
  */
 package FamiliaOperaciones;
 
+import ClasesAuxiliares.Cita;
+import ClasesAuxiliares.Diagnostico;
 import ClasesAuxiliares.Orden;
 import ClasesAuxiliares.SignosVitales;
 import ClasesAuxiliares.Tratamiento;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -24,15 +25,11 @@ public class ConsultaMedica extends Operacion {
     private Orden orden;
     private LocalDateTime fechaHoraFin;
     private boolean Emergency;
+    private Diagnostico diagnostico;
     private SignosVitales signosVitales;
-    private ArrayList<String[]> proximasConsultas = new ArrayList<>();
+    private ArrayList<Cita> proximasConsultas = new ArrayList<>();
     private String motivos, acompañante, relacion, examenFisico, procedimiento;
-    private HashMap<String, ArrayList<String[]>> diagnosticos = new HashMap<>();
-
-    {
-        diagnosticos.put("Personales", new ArrayList<>());
-        diagnosticos.put("Familiares", new ArrayList<>());
-    }
+    private ArrayList<Diagnostico> diagnosticos = new ArrayList<>();
 
     public int getIdConsulta() {
         return idConsulta;
@@ -90,11 +87,11 @@ public class ConsultaMedica extends Operacion {
         this.signosVitales = signosVitales;
     }
 
-    public ArrayList<String[]> getProximasConsultas() {
+    public ArrayList<Cita> getProximasConsultas() {
         return proximasConsultas;
     }
 
-    public void setProximasConsultas(ArrayList<String[]> proximasConsultas) {
+    public void setProximasConsultas(ArrayList<Cita> proximasConsultas) {
         this.proximasConsultas = proximasConsultas;
     }
 
@@ -138,17 +135,26 @@ public class ConsultaMedica extends Operacion {
         this.procedimiento = procedimiento;
     }
 
-    public HashMap<String, ArrayList<String[]>> getDiagnosticos() {
+    public ArrayList<Diagnostico> getDiagnosticos() {
         return diagnosticos;
     }
 
-    public void setDiagnosticos(HashMap<String, ArrayList<String[]>> diagnosticos) {
+    public void setDiagnosticos(ArrayList<Diagnostico> diagnosticos) {
         this.diagnosticos = diagnosticos;
     }
 
-    @Override
-    public String toString() {
-        return "ConsultaMedica{" + "idConsulta=" + idConsulta + ", idMedicalVisit=" + idMedicalVisit + ", tratamiento=" + tratamiento + ", orden=" + orden + ", fechaHoraFin=" + fechaHoraFin + ", Emergency=" + Emergency + ", signosVitales=" + signosVitales + ", proximasConsultas=" + proximasConsultas + ", motivos=" + motivos + ", acompa\u00f1ante=" + acompañante + ", relacion=" + relacion + ", examenFisico=" + examenFisico + ", procedimiento=" + procedimiento + ", diagnosticos=" + diagnosticos + '}';
+    public Diagnostico getDiagnostico() {
+        return diagnostico;
     }
 
+    public void setDiagnostico(Diagnostico diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+    
+    @Override
+    public String toString() {
+    return "ConsultaMedica{" + "idConsulta=" + idConsulta + ", idMedicalVisit=" + idMedicalVisit + ", tratamiento=" + tratamiento + ", orden=" + orden + ", fechaHoraFin=" + fechaHoraFin + ", Emergency=" + Emergency + ", diagnostico=" + diagnostico + ", signosVitales=" + signosVitales + ", proximasConsultas=" + proximasConsultas + ", motivos=" + motivos + ", acompa\u00f1ante=" + acompañante + ", relacion=" + relacion + ", examenFisico=" + examenFisico + ", procedimiento=" + procedimiento + ", diagnosticos=" + diagnosticos + '}';
+    }
+
+    
 }

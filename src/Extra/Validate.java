@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +27,7 @@ public class Validate {
 
     private final Conexion conexion = Conexion.getInstancia();
     private final Connection connection = conexion.getConnection();
+
     private PreparedStatement ps;
     private CallableStatement cs;
     private ResultSet rs;
@@ -72,15 +75,12 @@ public class Validate {
     public String ultimoId(String tabla) throws Exception {
         String value = "";
 
-        conexion.conectar();
         String query = "SELECT MAX(" + tablas.get(tabla) + ") AS ultimo FROM " + tabla;
         ps = connection.prepareStatement(query);
         rs = ps.executeQuery();
         rs.next();
         value = String.valueOf(rs.getObject("ultimo"));
         ps.close();
-
-        //conexion.desconectar();
 
         if (value.equals("null")) {
             return "0";
@@ -93,7 +93,6 @@ public class Validate {
     public int esUsuarioMedico(String cedula, String clave) throws Exception {
         int idMedico;
 
-        conexion.conectar();
         cs = connection.prepareCall("{CALL verificarMedico(?, ?)}");
         cs.setString(1, cedula);
         cs.setString(2, clave);
@@ -101,9 +100,9 @@ public class Validate {
         rs.next();
         idMedico = rs.getInt("idMedico");
         cs.close();
-        conexion.desconectar();
+        //conexion.desconectar();
         if (idMedico == 0) {
-            return -1;
+            throw new Exception("No existe doctor con esa cuenta");
         } else {
             return idMedico;
         }
@@ -112,7 +111,6 @@ public class Validate {
 
     public int obtenerNroHistoriaCedula(String cedula) throws Exception {
 
-        conexion.conectar();
         cs = connection.prepareCall("{CALL obtenerNroHistoriaCedula(?)}");
         cs.setString(1, cedula);
         rs = cs.executeQuery();
@@ -122,7 +120,7 @@ public class Validate {
         cs.close();
 
         if (nroHistoria == 0) {
-            return -1;//manejar con Excepciones
+            throw new Exception("No existe persona con esa cedula");
         } else {
             return nroHistoria;
         }
@@ -131,7 +129,6 @@ public class Validate {
 
     public int obtenerNroHistoriaNombre(String nombre) throws Exception {
 
-        conexion.conectar();
         cs = connection.prepareCall("{CALL obtenerNroHistoriaNombre(?)}");
         cs.setString(1, nombre);
         rs = cs.executeQuery();
@@ -139,10 +136,9 @@ public class Validate {
         rs.next();
         int nroHistoria = rs.getInt("nroHistoria");
         cs.close();
-        conexion.desconectar();
 
         if (nroHistoria == 0) {
-            return -1;
+            throw new Exception("No existe persona con ese nombre");
         } else {
             return nroHistoria;
         }
@@ -151,7 +147,6 @@ public class Validate {
 
     public String obtenerIdPersonaNombre(String nombre) throws Exception {
 
-        conexion.conectar();
         cs = connection.prepareCall("{CALL obtenerIdPersonaNombre(?)}");
         cs.setString(1, nombre);
         rs = cs.executeQuery();
@@ -159,7 +154,6 @@ public class Validate {
         rs.next();
         String idPersona = rs.getString("idPersona");
         cs.close();
-        conexion.desconectar();
 
         if (idPersona == null) {
             throw new Exception("No existe persona con ese nombre");// manejar con Excepciones
@@ -168,16 +162,40 @@ public class Validate {
         }
 
     }
-    
-     public static ArrayList<LocalDate> getDates(LocalDate startDate, LocalDate endDate) {
+
+    public String obtenerIdPersonaNroHistoria(int nroHistoria) throws Exception {
+
+        cs = connection.prepareCall("{CALL obtenerIdPersonaHistoria(?)}");
+        cs.setInt(1, nroHistoria);
+        rs = cs.executeQuery();
+
+        rs.next();
+        String idPersona = rs.getString("idPatient");
+        cs.close();
+
+        if (idPersona == null) {
+            throw new Exception("No existe persona con ese nroHistoria");// manejar con Excepciones
+        } else {
+            return idPersona;
+        }
+
+    }
+
+    public static String formatearFechaHoraFb(String fechaHora) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm");
+        String fechaHoraFormateada = String.valueOf((LocalDateTime.parse(fechaHora)).format(formatter));
+        return fechaHoraFormateada;
+    }
+
+    public static ArrayList<LocalDate> getDates(
+            LocalDate startDate, LocalDate endDate) {
 
         long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
-        return (ArrayList) (IntStream.iterate(0, i -> i + 1)
+        return (ArrayList<LocalDate>) IntStream.iterate(0, i -> i + 1)
                 .limit(numOfDaysBetween)
                 .mapToObj(i -> startDate.plusDays(i))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
     }
-    
 
     public HashMap<String, String> getTablas() {
         return tablas;

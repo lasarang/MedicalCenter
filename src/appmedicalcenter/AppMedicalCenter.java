@@ -6,9 +6,9 @@
 package appmedicalcenter;
 
 import BaseDeDatos.Conexion;
+import ClasesAuxiliares.Cita;
+import ClasesAuxiliares.Diagnostico;
 
-import ClasesAuxiliares.FabricaAbstracta;
-import ClasesAuxiliares.FabricaProductor;
 import ClasesAuxiliares.Horario;
 import ClasesAuxiliares.Orden;
 import FamiliaPersonas.Paciente;
@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -57,7 +56,8 @@ public class AppMedicalCenter extends Application {
     public static void main(String[] args) {
         launch(args);
         try {
-            (Conexion.getInstancia()).conectar();
+            Conexion conexion = Conexion.getInstancia();
+            conexion.conectar();
 
             PacienteDAOImpl pdao = new PacienteDAOImpl();
             ProductoDAOImpl pdtdao = new ProductoDAOImpl();
@@ -79,8 +79,8 @@ public class AppMedicalCenter extends Application {
             domicilios.add(s1);
             domicilios.add(s2);
 
-            FabricaAbstracta fa = FabricaProductor.getFabrica("PERSONA FABRICA");
-            Paciente paciente = (Paciente) fa.getPersona("Paciente");
+            
+            Paciente paciente = new Paciente();
 
             paciente.setIdPersona("0913499742");
             paciente.setNombre("Diana Prince");
@@ -138,62 +138,51 @@ public class AppMedicalCenter extends Application {
             consulta.setSignosVitales(signos);
 
             //Diagnosticos
-            HashMap<String, ArrayList<String[]>> diagnosticos = consulta.getDiagnosticos();
+            ArrayList<Diagnostico> diagnosticos = new ArrayList<>();
 
-            ArrayList<String[]> familiares = new ArrayList<>(),
-                    personales = new ArrayList<>();
-            String[] df1 = {"Diabetes Tipo II", "E10"}, //diagnostico, cie10
-                    df2 = {"Hipertension Tipo I", "I10"},
-                    df3 = {"Alzhaimer", "G30"},
-                    df4 = {"Astigmatismo", "H52.2"},
-                    df5 = {"Hemofilia", "D66"},
-                    dp1 = {"Esquizofrenia", "E10"},
-                    dp2 = {"Hepatitis B", "E10"},
-                    dp3 = {"Gastritis", "E10"},
-                    dp4 = {"Sinusitis", "E10"};
+            Diagnostico df1 = new Diagnostico("Diabetes Tipo II", "Familiar", "E10"), //diagnostico, cie10
+                    df2 = new Diagnostico("Hipertension Tipo I", "Familiar", "I10"),
+                    df3 = new Diagnostico("Alzhaimer", "Personal", "G30"),
+                    df4 = new Diagnostico("Astigmatismo", "Personal", "H52.2");
 
-            familiares.add(df1);
-            familiares.add(df2);
-            familiares.add(df3);
-            familiares.add(df4);
-            familiares.add(df5);
+            diagnosticos.add(df1);
+            diagnosticos.add(df2);
+            diagnosticos.add(df3);
+            diagnosticos.add(df4);
 
-            personales.add(dp1);
-            personales.add(dp2);
-            personales.add(dp3);
-            personales.add(dp4);
+            System.out.println("Diagnosticos " + diagnosticos);
+            consulta.setDiagnosticos(diagnosticos);
 
-            diagnosticos.replace("Personales", personales);
-            diagnosticos.replace("Familiares", familiares);
-
-            ArrayList<String[]> proximasConsultas = consulta.getProximasConsultas();
-            String[] pc1 = {"2019-01-03", "Medicina General - MD Gregory House"}, //fecha,descripcion
-                    pc2 = {"2019-01-20", "Endocrinologia - MD Gregory House"},
-                    pc3 = {"2019-02-08", "Cardiologia - MD Gregory House"};
+            ArrayList<Cita> proximasConsultas = new ArrayList<>();
+            Cita pc1 = new Cita("2019-01-03", "Medicina General - MD Gregory House"), //fecha,descripcion
+                    pc2 = new Cita("2019-01-20", "Endocrinologia - MD Gregory House"),
+                    pc3 = new Cita("2019-02-08", "Cardiologia - MD Gregory House");
 
             proximasConsultas.add(pc1);
             proximasConsultas.add(pc2);
             proximasConsultas.add(pc3);
 
+            System.out.println("Proximas consultas " + proximasConsultas);
+            consulta.setProximasConsultas(proximasConsultas);
+
             //Orden examenes
             Orden orden = new Orden();
-            orden.setIdOrden(Integer.parseInt(validate.ultimoId("Ordenes")) + 1);//Se debe de setear para que puedan escibirse los parametros
-            orden.setIdOrder(idConsulta);
-            orden.setFechaHoraAsistencia(LocalDateTime.parse("2018-12-30 07:15:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            
+            orden.setIdOrden(Integer.parseInt(validate.ultimoId("Ordenes"))+1);
+            orden.setFechaHoraAsistencia("2018-12-30 07:15");
             orden.setDescripcion("Debe acudir en ayuna con un envase de orina");
 
-            ArrayList<String> parametros = new ArrayList<>();
-            parametros.add("Colesterol Total");
-            parametros.add("Hematocritos");
-            parametros.add("Leucocitos");
-            parametros.add("Creatinina");
-            parametros.add("Urea");
-            parametros.add("Marihuana");
-            parametros.add("Cocaina");
+            ArrayList<String> examenes = new ArrayList<>();
+            examenes.add("Leucocitos");
+            examenes.add("Hematocritos");
+            examenes.add("Urea");
+            examenes.add("Creatinina");
 
-            orden.setParametros(parametros);
+            orden.setExamenes(examenes);
+
+            System.out.println("Orden " + orden);
             consulta.setOrden(orden);
-
+            
             //Tratamiento
             int idTratamiento = Integer.parseInt(validate.ultimoId("Tratamientos")) + 1;
 
@@ -290,9 +279,9 @@ public class AppMedicalCenter extends Application {
             //3er Horario
             Horario h3 = new Horario();
             ArrayList<Accion> acciones3 = new ArrayList<>();
-            int idHorario3 = Integer.parseInt(validate.ultimoId("Horarios")) + 1;
+            //int idHorario3 = Integer.parseInt(validate.ultimoId("Horarios")) + 1;
 
-            h3.setIdHorario(idHorario3);
+            //h3.setIdHorario(idHorario3);
             h3.setIdHorario(Integer.parseInt(validate.ultimoId("Horarios")) + 1);
             h3.setIdSchedule(idTratamiento);
             h3.setHora(LocalTime.parse("19:15:00"));
@@ -334,6 +323,7 @@ public class AppMedicalCenter extends Application {
             //System.out.println(cdao.readAllConsultasFecha(LocalDate.parse("2018-12-29")));
             //System.out.println(pdao.read("Diana Prince"));
 
+            conexion.desconectar();
         } catch (Exception ex) {
             System.out.println("No se pudo conectar " + ex);
             ex.printStackTrace();

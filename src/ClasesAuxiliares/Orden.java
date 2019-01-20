@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class Orden {
 
     private int idOrden, idOrder;
-    private LocalDateTime fechaHoraAsistencia;
+    private String fechaHoraAsistencia;
     private String descripcion;
-    private ArrayList<String> parametros;//OrdenParametros
+    private ArrayList<String> examenes;//OrdenParametros
 
     public int getIdOrden() {
         return idOrden;
@@ -27,11 +27,11 @@ public class Orden {
         this.idOrden = idOrden;
     }
 
-    public LocalDateTime getFechaHoraAsistencia() {
+    public String getFechaHoraAsistencia() {
         return fechaHoraAsistencia;
     }
 
-    public void setFechaHoraAsistencia(LocalDateTime fechaHoraAsistencia) {
+    public void setFechaHoraAsistencia(String fechaHoraAsistencia) {
         this.fechaHoraAsistencia = fechaHoraAsistencia;
     }
 
@@ -43,12 +43,12 @@ public class Orden {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<String> getParametros() {
-        return parametros;
+    public ArrayList<String> getExamenes() {
+        return examenes;
     }
 
-    public void setParametros(ArrayList<String> parametros) {
-        this.parametros = parametros;
+    public void setExamenes(ArrayList<String> examenes) {
+        this.examenes = examenes;
     }
 
     public int getIdOrder() {
@@ -61,7 +61,8 @@ public class Orden {
 
     @Override
     public String toString() {
-        return "Orden{" + "idOrden=" + idOrden + ", idOrder=" + idOrder + ", descripcion=" + descripcion + ", parametros=" + parametros + '}';
+        return "Orden{" + "idOrden=" + idOrden + ", idOrder=" + idOrder + ", fechaHoraAsistencia=" + fechaHoraAsistencia + ", descripcion=" + descripcion + ", examenes=" + examenes + '}';
     }
+
 
 }

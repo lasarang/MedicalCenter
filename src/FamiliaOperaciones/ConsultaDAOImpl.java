@@ -6,6 +6,8 @@
 package FamiliaOperaciones;
 
 import BaseDeDatos.Conexion;
+import ClasesAuxiliares.Cita;
+import ClasesAuxiliares.Diagnostico;
 import ClasesAuxiliares.Horario;
 import ClasesAuxiliares.HorarioAccion;
 import ClasesAuxiliares.Orden;
@@ -27,7 +29,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -53,8 +54,10 @@ public class ConsultaDAOImpl implements IConsultaDAO {
     private ArrayList<HorarioAccion> horariosAcciones;
     private ArrayList<Producto> medicamentos;
     private ArrayList<ConsultaMedica> consultasObtenidas;
-    private ArrayList<String[]> proximasConsultas;
-    private HashMap<String, ArrayList<String[]>> diagnosticos;
+    private ArrayList<Cita> proximasConsultas;
+    private Cita cita;
+    private Diagnostico diagnostico;
+    private ArrayList<Diagnostico> diagnosticos;
     private ConsultaMedica cm;
     private SignosVitales signos;
     private Tratamiento tm, tm2;
@@ -105,31 +108,24 @@ public class ConsultaDAOImpl implements IConsultaDAO {
 
         //Consulta: Diagnosticos
         //Antecedentes personales
-        for (String[] personales : consulta.getDiagnosticos().get("Personales")) {
+        for (Diagnostico diagnostico : consulta.getDiagnosticos()) {
             cs = connection.prepareCall("{CALL createDiagnostico(?, ?, ?, ?)}");
             cs.setInt(1, consulta.getIdConsulta());
-            cs.setString(4, "Personal");//TipoAntecedente
-            cs.setString(2, personales[0]);//Diagnostico
-            cs.setString(3, personales[1]);//CIE10
-            cs.executeQuery();
-            cs.close();
-        }
-        //Antecedentes familiares
-        for (String[] familiares : consulta.getDiagnosticos().get("Familiares")) {
-            cs = connection.prepareCall("{CALL createDiagnostico(?, ?, ?, ?)}");
-            cs.setInt(1, consulta.getIdConsulta());
-            cs.setString(4, "Familiar");//TipoAntecedente
-            cs.setString(2, familiares[0]);//Diagnostico
-            cs.setString(3, familiares[1]);//CIE10
+            cs.setString(4, diagnostico.getAntecedente());//TipoAntecedente
+            cs.setString(2, diagnostico.getPatologia());//Diagnostico
+            cs.setString(3, diagnostico.getCie10());//CIE10
             cs.executeQuery();
             cs.close();
         }
         //Consulta: citas medicas
-        for (String[] proxima : consulta.getProximasConsultas()) {
+
+        //Consulta: citas medicas  
+        for (Cita proxima : consulta.getProximasConsultas()) {
+
             cs = connection.prepareCall("{CALL createCita(?, ?, ?)}");
             cs.setInt(1, consulta.getIdConsulta());
-            cs.setObject(2, LocalDate.parse(proxima[0]));//fecha
-            cs.setString(3, proxima[1]);//descripcion
+            cs.setObject(2, LocalDate.parse(proxima.getFecha()));//fecha
+            cs.setString(3, proxima.getDescripcion());//descripcion
             cs.executeQuery();
             cs.close();
         }
@@ -142,8 +138,6 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         createHorarios(tratamiento);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
-        conexion.desconectar();
-
         System.out.println("Creación exitosa de la consulta!");
 
     }
@@ -163,8 +157,6 @@ public class ConsultaDAOImpl implements IConsultaDAO {
 
     private void createOrden(Orden orden, int idConsulta) throws Exception {
         //Consulta: Orden
-        String query = "SELECT idParametro FROM Parametros WHERE ?=Parametro";
-
         //Orden
         cs = connection.prepareCall("{CALL createOrden(?, ?, ?)}");
         cs.setInt(1, idConsulta);
@@ -173,25 +165,15 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         cs.executeQuery();
         cs.close();
 
-        int idParametro;
-        for (String parametro : orden.getParametros()) {//Obteniendo el idParametro apartir del parametro
-
-            ps = connection.prepareStatement(query);
-            ps.setString(1, parametro);
-            rs = ps.executeQuery();
-            rs.next();
-            idParametro = rs.getInt("idParametro");
-            ps.close();
-
+        for (String parametro : orden.getExamenes()) {//Obteniendo el idParametro apartir del parametro
             //Orden: OrdenParametro
             cs2 = connection.prepareCall("{CALL createOrdenParametro(?, ?)}");
             cs2.setInt(1, orden.getIdOrden());
-            cs2.setInt(2, idParametro);
+            cs2.setString(2, parametro);
             cs2.executeQuery();
             cs2.close();
 
         }
-
     }
 
     private void createHorarios(Tratamiento tratamiento) throws Exception {
@@ -205,9 +187,9 @@ public class ConsultaDAOImpl implements IConsultaDAO {
             cs.setInt(1, tratamiento.getIdTratamiento());//idTratamiento
             cs.setObject(2, hora);
             cs.setString(3, condicionComida);
-
             cs.executeQuery();
             cs.close();
+
             int idAgenda = Integer.parseInt(validate.ultimoId("Horarios"));
             System.out.println("Horario #: " + idAgenda);
 
@@ -221,6 +203,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
                     cs2.close();
 
                     int idAccion = Integer.parseInt(validate.ultimoId("Acciones"));
+                    System.out.println("idAcccion: " + idAccion);
 
                     //Accion: AdmiMedicina
                     if (accion instanceof AdmiMedicina) {
@@ -369,7 +352,6 @@ public class ConsultaDAOImpl implements IConsultaDAO {
             consultasObtenidas.add(cm);
         }
 
-        conexion.desconectar();
         return consultasObtenidas;
 
     }
@@ -405,7 +387,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         return signos;
     }
 
-    private ArrayList<String[]> readCitas(int idConsulta) throws Exception {
+    private ArrayList<Cita> readCitas(int idConsulta) throws Exception {
         proximasConsultas = new ArrayList<>();
         cs2 = connection.prepareCall("{CALL readConsultaCitas(?)}");
         cs2.setInt(1, idConsulta);
@@ -413,9 +395,8 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         while (rs2.next()) {
             Date fecha = (Date) rs2.getObject("Fecha");
             String descripcion = rs2.getString("Descripcion");
-
-            String[] pc = {String.valueOf(fecha), descripcion};
-            proximasConsultas.add(pc);
+            cita = new Cita(String.valueOf(fecha), String.valueOf(descripcion));
+            proximasConsultas.add(cita);
         }
 
         return proximasConsultas;
@@ -435,9 +416,9 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         String descripcion = rs2.getString("Descripcion");
         ord.setIdOrden(idOrden);
         ord.setIdOrder(idConsulta);
-        ord.setFechaHoraAsistencia(fechaHoraAsistencia.toLocalDateTime());
+        ord.setFechaHoraAsistencia(fechaHoraAsistencia.toString());
         ord.setDescripcion(descripcion);
-        ord.setParametros(readOrdenParametros(idOrden));
+        ord.setExamenes(readOrdenParametros(idOrden));
         return ord;
 
     }
@@ -450,32 +431,28 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         rs3 = cs3.executeQuery();
 
         while (rs3.next()) {
-            parametros.add(rs3.getString("Parametro"));
+            parametros.add(rs3.getString("Examen"));
         }
 
         return parametros;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
 
-    private HashMap<String, ArrayList<String[]>> readDiagnosticos(int idConsulta) throws Exception {
-        diagnosticos = new HashMap<>();
-        diagnosticos.put("Personales", new ArrayList<>());
-        diagnosticos.put("Familiares", new ArrayList<>());
+    private ArrayList<Diagnostico> readDiagnosticos(int idConsulta) throws Exception {
+        diagnosticos = new ArrayList<>();
 
         cs2 = connection.prepareCall("{CALL readConsultaDiagnosticos(?)}");
         cs2.setInt(1, idConsulta);
         rs2 = cs2.executeQuery();
 
         while (rs2.next()) {
-            String diagnostico = rs2.getString("Diagnostico"),
+
+            String diagnosis = rs2.getString("Diagnostico"),
                     cie10 = rs2.getString("CIE10"),
                     tipoAntecedente = rs2.getString("TipoAntecedente");
-            String[] d = {diagnostico, cie10};
-            if (tipoAntecedente.equals("Personal")) {
-                (diagnosticos.get("Personales")).add(d);
-            } else if (tipoAntecedente.equals("Familiar")) {
-                (diagnosticos.get("Familiares")).add(d);
-            }
+
+            diagnostico = new Diagnostico(diagnosis, tipoAntecedente, cie10);
+            diagnosticos.add(diagnostico);
 
         }
 
@@ -528,7 +505,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
             horario.setCondicionComida(condicionComida);
 
             horario.setAccionesHorarios(readHorarioAcciones(idHorario));
-            System.out.println("Horario: "+horario);
+            //System.out.println("Horario: " + horario);
             horarios.add(horario);
         }
 
@@ -641,7 +618,6 @@ public class ConsultaDAOImpl implements IConsultaDAO {
             medicamento.setNombreComercial(nombreComercial);
             medicamento.setPresentacion(presentacion);
             medicamento.setLaboratorio(laboratorio);
-
             medicamentos.add(medicamento);
 
         }
@@ -708,7 +684,6 @@ public class ConsultaDAOImpl implements IConsultaDAO {
             consultasObtenidas.add(cm);
         }
 
-        conexion.desconectar();
         return consultasObtenidas;
 
     }

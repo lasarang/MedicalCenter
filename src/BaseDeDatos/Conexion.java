@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class Conexion {
     private static Conexion instancia;
     private Connection connection;
-    private final String URL="jdbc:mysql://localhost:3306/MedicalCenterNarcisaDeJesus",
+    private final String URL="jdbc:mysql://Localhost:3306/MedicalCenterNarcisaDeJesus?autoReconnect=true&useSSL=false",
                          USER="root",
                          PWD="Programming0";
 
