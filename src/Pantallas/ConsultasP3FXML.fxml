@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ConsultasP3FXMLController">
+   <children>
+      <Label fx:id="LblTitulo3" layoutX="841.0" layoutY="45.0" text="Luis Sarango" />
+      <Label fx:id="LblTitulo2" layoutX="671.0" layoutY="46.0" text="HistoriaClinica" />
+      <ImageView fx:id="imgaeBack" fitHeight="22.0" fitWidth="21.0" layoutX="72.0" layoutY="42.0" onMouseClicked="#BackPaso2" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="titulo" layoutX="218.0" layoutY="42.0" text="Consultas Médicas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="BtContinuar" layoutX="794.0" layoutY="88.0" mnemonicParsing="false" onAction="#ConsultaP4" prefHeight="23.0" prefWidth="103.0" style="-fx-background-color: #0B3861;" text="Continuar" textFill="#fefeff" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Apple Braille Outline 6 Dot" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblLugarFecha" layoutX="103.0" layoutY="169.0" text="Fecha y Hora - Asistencia" textFill="#000000af">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDesc" layoutX="106.0" layoutY="264.0" text="Descripción" textFill="#000000af">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="TxtDescripcion" layoutX="103.0" layoutY="290.0" prefHeight="98.0" prefWidth="200.0" />
+      <TextArea fx:id="txtLugar" layoutX="103.0" layoutY="200.0" prefHeight="48.0" prefWidth="200.0" promptText="yyyy-mm-dd  hh:mm" />
+      <Label fx:id="lblExam" layoutX="521.0" layoutY="142.0" text="Examenes" textFill="#000000af">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Accordion fx:id="Acordion1" layoutX="579.0" layoutY="201.0">
+         <panes>
+            <TitledPane fx:id="titulo11" text="Enzimas">
+               <content>
+                  <ScrollPane fx:id="Scroll11" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Enzimas" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo21" text="Perfil Inmunologico">
+               <content>
+                  <ScrollPane fx:id="scroll21" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Inmuologico" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo31" text="ORINA">
+               <content>
+                  <ScrollPane fx:id="scroll31" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Orina" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo41" text="FERTILIDAD">
+               <content>
+                  <ScrollPane fx:id="scroll41" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Fertilidad" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo412" layoutX="10.0" layoutY="91.0" text="Heces">
+               <content>
+                  <ScrollPane fx:id="scroll412" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Heces" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo4121" layoutX="10.0" layoutY="520.0" text="Moco Nasal">
+               <content>
+                  <ScrollPane fx:id="scroll4121" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Moco" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo41211" layoutX="10.0" layoutY="547.0" text="Control De Anemias">
+               <content>
+                  <ScrollPane fx:id="scroll41211" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Anemias" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo412111" layoutX="10.0" layoutY="574.0" text="Biologia Molecular">
+               <content>
+                  <ScrollPane fx:id="scroll412111" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Molecular" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo4121111" layoutX="10.0" layoutY="601.0" text="Niveles Farmacos y Abuso De Drogas">
+               <content>
+                  <ScrollPane fx:id="scroll4121111" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Drogas" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo41211111" layoutX="10.0" layoutY="628.0" text="Marcadores Hepaticos">
+               <content>
+                  <ScrollPane fx:id="scroll41211111" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Hepaticos" prefHeight="200.0" prefWidth="260.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+         </panes>
+      </Accordion>
+      <Accordion fx:id="Acordion2" layoutX="342.0" layoutY="199.0">
+         <panes>
+            <TitledPane fx:id="titulo111" text="Bioquimicos">
+               <content>
+                  <ScrollPane fx:id="Scroll111" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Bioquimicos" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo211" text="Hormonas">
+               <content>
+                  <ScrollPane fx:id="scroll211" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Hormonas" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo311" text="Electrolito">
+               <content>
+                  <ScrollPane fx:id="ScrollElec" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Electrolito" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo411" text="Nefelometria">
+               <content>
+                  <ScrollPane fx:id="scroll411" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Nefelometria" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo511" text="Microbiologia y Bacteriologia">
+               <content>
+                  <ScrollPane fx:id="scroll511" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Micro" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo1111" layoutX="10.0" layoutY="10.0" text="IFI">
+               <content>
+                  <ScrollPane fx:id="Scroll1111" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="IFI" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo1112" layoutX="10.0" layoutY="10.0" text="Marcadores Tumorales">
+               <content>
+                  <ScrollPane fx:id="Scroll1112" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Tumorales" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo1113" layoutX="10.0" layoutY="10.0" text="Serologicos">
+               <content>
+                  <ScrollPane fx:id="Scroll1113" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Serologicos" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo1114" layoutX="10.0" layoutY="10.0" text="Control Lipidico">
+               <content>
+                  <ScrollPane fx:id="Scroll1114" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Lipidico" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo1115" layoutX="10.0" layoutY="10.0" text="Hemostaticos">
+               <content>
+                  <ScrollPane fx:id="Scroll1115" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Hemostaticos" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+            <TitledPane fx:id="titulo1116" layoutX="10.0" layoutY="10.0" text="Hematologicos">
+               <content>
+                  <ScrollPane fx:id="Scroll1116" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                     <content>
+                        <VBox fx:id="Hematologicos" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </ScrollPane>
+               </content>
+            </TitledPane>
+         </panes>
+      </Accordion>
+      <Label fx:id="lblFaltanDatos" layoutX="697.0" layoutY="92.0" text="Faltan Datos" textFill="#e81919" visible="false" />
+   </children>
+</AnchorPane>

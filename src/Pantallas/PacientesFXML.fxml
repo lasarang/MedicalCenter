@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.PacientesFXMLController">
+   <children>
+      <Label fx:id="lblTitulo" layoutX="434.0" layoutY="31.0" text="Pacientes">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSubtitulo" layoutX="364.0" layoutY="63.0" opacity="0.65" text="Seleccione alguna opción para empezar" />
+      <ImageView fx:id="Ima1" fitHeight="310.0" fitWidth="505.0" layoutX="377.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/740bf5f811111c88-2048x1024.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblPaciente" layoutX="115.0" layoutY="145.0" opacity="0.65" text="Paciente">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="texfieldCedula" layoutX="112.0" layoutY="184.0" promptText="Cédula" />
+      <Label fx:id="lblExiste" layoutX="113.0" layoutY="227.0" prefHeight="17.0" prefWidth="198.0" textFill="#e40c0c" />
+      <ImageView fx:id="imgaBack" fitHeight="23.0" fitWidth="23.0" layoutX="40.0" layoutY="31.0" onMouseClicked="#Regresar" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btDetalles" layoutX="112.0" layoutY="267.0" mnemonicParsing="false" onAction="#BusquedaPaciente" prefHeight="27.0" prefWidth="105.0" style="-fx-background-color: #0B3861;" text="Buscar" textFill="WHITE" />
+   </children>
+</AnchorPane>

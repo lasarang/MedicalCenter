@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ConsultaPaso1FXMLController">
+   <children>
+      <Label fx:id="LblTitulo3" layoutX="843.0" layoutY="25.0" text="Luis Sarango" />
+      <Label fx:id="LblTitulo2" layoutX="651.0" layoutY="26.0" text="HistoriaClinica" />
+      <ImageView fx:id="imgaeBack" fitHeight="22.0" fitWidth="21.0" layoutX="52.0" layoutY="22.0" onMouseClicked="#BackConsulta" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="titulo" layoutX="198.0" layoutY="22.0" text="Consultas Médicas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="BtContinuar" layoutX="774.0" layoutY="68.0" mnemonicParsing="false" onAction="#ConsultasP2" prefHeight="23.0" prefWidth="103.0" style="-fx-background-color: #0B3861;" text="Continuar" textFill="#fefeff" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Apple Braille Outline 6 Dot" size="12.0" />
+         </font>
+      </Button>
+      <RadioButton fx:id="btnEmergia" layoutX="104.0" layoutY="70.0" mnemonicParsing="false" text="Emergencia">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </RadioButton>
+      <ImageView fx:id="image1" fitHeight="20.0" fitWidth="23.0" layoutX="266.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/Alerta.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbl1" layoutX="110.0" layoutY="141.0" text="Acompanante" />
+      <Label fx:id="lbl2" layoutX="418.0" layoutY="138.0" text="Relación" />
+      <Label fx:id="lbl3" layoutX="718.0" layoutY="138.0" text="Motivo de Consulta" />
+      <Label layoutX="424.0" layoutY="237.0" />
+      <Label fx:id="titulo1" layoutX="377.0" layoutY="228.0" text="Medicion de Signos Vitales">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl4" layoutX="117.0" layoutY="290.0" text="Frecuencia Cardiaca" />
+      <Label fx:id="lbl5" layoutX="407.0" layoutY="285.0" prefHeight="28.0" prefWidth="170.0" text="Frecuencia Respiratoria" />
+      <Label fx:id="lbl7" layoutX="117.0" layoutY="355.0" text="Saturacion de Oxigeno" />
+      <Label fx:id="lbl8" layoutX="406.0" layoutY="357.0" text="Temperatura" />
+      <Label fx:id="lbl9" layoutX="120.0" layoutY="411.0" text="Talla" />
+      <Label fx:id="lbl10" layoutX="406.0" layoutY="412.0" text="Peso" />
+      <TextField fx:id="txt1" layoutX="108.0" layoutY="164.0" />
+      <TextField fx:id="txt2" layoutX="417.0" layoutY="164.0" />
+      <TextArea fx:id="Txtfiel1" layoutX="676.0" layoutY="164.0" prefHeight="89.0" prefWidth="224.0" />
+      <TextField fx:id="TxtFrecuenciaCard" layoutX="113.0" layoutY="312.0" />
+      <TextField fx:id="TxtSaturacionOxi" layoutX="115.0" layoutY="378.0" />
+      <TextField fx:id="TxtFrecuenciaRes" layoutX="404.0" layoutY="311.0" />
+      <TextField fx:id="TxtTemperatura" layoutX="404.0" layoutY="379.0" />
+      <TextField fx:id="TxtTalla" layoutX="117.0" layoutY="431.0" prefHeight="27.0" prefWidth="114.0" />
+      <TextField fx:id="TxtPeso" layoutX="405.0" layoutY="432.0" prefHeight="27.0" prefWidth="114.0" />
+      <TextField fx:id="txtSistolica" layoutX="738.0" layoutY="353.0" prefWidth="114.0" />
+      <TextField fx:id="txtDiastolica" layoutX="738.0" layoutY="411.0" prefWidth="114.0" />
+      <Label fx:id="lbPulso" layoutX="733.0" layoutY="295.0" text="Presión Ateriral">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label fx:id="lblSistolica" layoutX="738.0" layoutY="330.0" text="Sistolica" />
+      <Label fx:id="lblDiastolica" layoutX="738.0" layoutY="390.0" text="Diastolica" />
+      <Label fx:id="lblFaltanDtatos" layoutX="590.0" layoutY="71.0" text="Faltan Datos!" textFill="#eb0e0e" visible="false" />
+   </children>
+</AnchorPane>

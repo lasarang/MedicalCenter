@@ -124,7 +124,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
 
             cs = connection.prepareCall("{CALL createCita(?, ?, ?)}");
             cs.setInt(1, consulta.getIdConsulta());
-            cs.setObject(2, LocalDate.parse(proxima.getFecha()));//fecha
+            cs.setObject(2, LocalDate.parse(proxima.getFecha().trim()));//fecha
             cs.setString(3, proxima.getDescripcion());//descripcion
             cs.executeQuery();
             cs.close();
@@ -460,6 +460,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
     }
 
     private Tratamiento readTratamientoSinHorarios(int idConsulta) throws Exception {
+        System.out.println(idConsulta);
         tm2 = new Tratamiento();
         cs2 = connection.prepareCall("{CALL readConsultaTratamiento(?)}");
         cs2.setInt(1, idConsulta);

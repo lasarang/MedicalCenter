@@ -25,7 +25,6 @@ public class ConsultaMedica extends Operacion {
     private Orden orden;
     private LocalDateTime fechaHoraFin;
     private boolean Emergency;
-    private Diagnostico diagnostico;
     private SignosVitales signosVitales;
     private ArrayList<Cita> proximasConsultas = new ArrayList<>();
     private String motivos, acompañante, relacion, examenFisico, procedimiento;
@@ -143,17 +142,11 @@ public class ConsultaMedica extends Operacion {
         this.diagnosticos = diagnosticos;
     }
 
-    public Diagnostico getDiagnostico() {
-        return diagnostico;
-    }
-
-    public void setDiagnostico(Diagnostico diagnostico) {
-        this.diagnostico = diagnostico;
-    }
+  
     
     @Override
     public String toString() {
-    return "ConsultaMedica{" + "idConsulta=" + idConsulta + ", idMedicalVisit=" + idMedicalVisit + ", tratamiento=" + tratamiento + ", orden=" + orden + ", fechaHoraFin=" + fechaHoraFin + ", Emergency=" + Emergency + ", diagnostico=" + diagnostico + ", signosVitales=" + signosVitales + ", proximasConsultas=" + proximasConsultas + ", motivos=" + motivos + ", acompa\u00f1ante=" + acompañante + ", relacion=" + relacion + ", examenFisico=" + examenFisico + ", procedimiento=" + procedimiento + ", diagnosticos=" + diagnosticos + '}';
+    return "ConsultaMedica{" + "idConsulta=" + idConsulta + ", idMedicalVisit=" + idMedicalVisit + ", tratamiento=" + tratamiento + ", orden=" + orden + ", fechaHoraFin=" + fechaHoraFin + ", Emergency=" + Emergency + ", diagnostico="+ ", signosVitales=" + signosVitales + ", proximasConsultas=" + proximasConsultas + ", motivos=" + motivos + ", acompa\u00f1ante=" + acompañante + ", relacion=" + relacion + ", examenFisico=" + examenFisico + ", procedimiento=" + procedimiento + ", diagnosticos=" + diagnosticos + '}';
     }
 
     

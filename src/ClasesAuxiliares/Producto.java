@@ -5,6 +5,8 @@
  */
 package ClasesAuxiliares;
 
+import javafx.scene.control.CheckBox;
+
 /**
  *
  * @author Luis A. Sarango-Parrales
@@ -14,7 +16,41 @@ public class Producto {
     private int idProducto, cantidad;
     private String nombreComercial, presentacion, laboratorio;
     private double precioUnitarioVenta;
+    private CheckBox seleccion;
 
+    public Producto() {
+    }
+
+    public Producto(int idProducto, int cantidad, String nombreComercial, String presentacion, String laboratorio, double precioUnitarioVenta, CheckBox seleccion) {
+        this.idProducto = idProducto;
+        this.cantidad = cantidad;
+        this.nombreComercial = nombreComercial;
+        this.presentacion = presentacion;
+        this.laboratorio = laboratorio;
+        this.precioUnitarioVenta = precioUnitarioVenta;
+        this.seleccion = seleccion;
+    }
+
+    public CheckBox getSeleccion() {
+        return seleccion;
+    }
+
+    public Producto(int idProducto, int cantidad, String nombreComercial, String presentacion, String laboratorio, double precioUnitarioVenta) {
+        this.idProducto = idProducto;
+        this.cantidad = cantidad;
+        this.nombreComercial = nombreComercial;
+        this.presentacion = presentacion;
+        this.laboratorio = laboratorio;
+        this.precioUnitarioVenta = precioUnitarioVenta;
+    }
+
+    public void setSeleccion(CheckBox seleccion) {
+        this.seleccion = seleccion;
+    }
+
+   
+    
+    
     public String getNombreComercial() {
         return nombreComercial;
     }

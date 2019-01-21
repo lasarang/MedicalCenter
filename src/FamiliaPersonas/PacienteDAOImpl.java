@@ -31,7 +31,7 @@ public class PacienteDAOImpl implements IPacienteDAO {
     @Override
     public void create(Paciente paciente) throws Exception {
 
-        conexion.conectar();
+       // conexion.conectar();
         cs = connection.prepareCall("{CALL createPersona(?, ?, ?)}");
         cs.setString(1, paciente.getIdPersona());
         cs.setString(2, paciente.getNombre());
@@ -82,7 +82,7 @@ public class PacienteDAOImpl implements IPacienteDAO {
             cs.close();
         }
 
-        conexion.desconectar();
+        //conexion.desconectar();
         System.out.println("Creación de paciente exitoso!");
 
     }
@@ -126,7 +126,7 @@ public class PacienteDAOImpl implements IPacienteDAO {
 
         cs.close();
 
-        conexion.desconectar();
+        //conexion.desconectar();
 
         return paciente;
     }

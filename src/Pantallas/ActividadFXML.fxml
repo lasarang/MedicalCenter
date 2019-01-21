@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ActividadFXMLController">
+   <children>
+      <TabPane layoutX="1.0" layoutY="61.0" prefHeight="458.0" prefWidth="948.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tab1" text="Horario1">
+               <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtHora" layoutX="26.0" layoutY="33.0" prefHeight="27.0" prefWidth="86.0" promptText=" HH : mm  " />
+                        <Label fx:id="lblHora" layoutX="29.0" layoutY="13.0" text="Hora" />
+                        <Label fx:id="lblCondicion" layoutX="235.0" layoutY="14.0" text="Condicion" />
+                        <ComboBox fx:id="txtCombo" layoutX="222.0" layoutY="33.0" prefWidth="150.0" />
+                        <RadioButton fx:id="btnPresion" layoutX="771.0" layoutY="216.0" mnemonicParsing="false" text="PresionArterial" />
+                        <RadioButton fx:id="BtnGlucosa" layoutX="768.0" layoutY="113.0" mnemonicParsing="false" text="Glucosa" />
+                        <Label fx:id="lblMediciones" layoutX="782.0" layoutY="84.0" text="Mediciones">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblMed" layoutX="351.0" layoutY="82.0" text="Medicamentos">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imageGlucosa" fitHeight="65.0" fitWidth="67.0" layoutX="789.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/monitores-glucosa-icono-07.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ImagecARDIACO" fitHeight="66.0" fitWidth="83.0" layoutX="786.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/corazon-electro.png" />
+                           </image>
+                        </ImageView>
+                        <TableView fx:id="tableReceta" layoutX="66.0" layoutY="120.0" prefHeight="268.0" prefWidth="666.0">
+                           <columns>
+                              <TableColumn fx:id="ColumMed" prefWidth="181.10205078125" text="Medicamento" />
+                              <TableColumn fx:id="ColumPres" prefWidth="194.89791870117188" text="Presentación" />
+                              <TableColumn fx:id="ColumCantidad" prefWidth="145.87030029296875" text="Cantidad Unitaria" />
+                              <TableColumn fx:id="Precio" prefWidth="144.94744873046875" text="Precio Unitario" />
+                           </columns>
+                        </TableView>
+                        <ImageView fx:id="imageMas" fitHeight="32.0" fitWidth="28.0" layoutX="18.0" layoutY="76.0" onMouseClicked="#VerMed" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/mas.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lblFaltanDatos" layoutX="784.0" layoutY="27.0" text="Faltan Datos!" textFill="#e41212" visible="false" />
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+            <Tab fx:id="tab2" text="Horario2">
+               <content>
+                  <AnchorPane fx:id="imageGlucosa2" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtHora2" layoutX="26.0" layoutY="33.0" prefHeight="27.0" prefWidth="86.0" promptText=" HH : mm  " />
+                        <Label fx:id="lblHora2" layoutX="29.0" layoutY="13.0" text="Hora" />
+                        <Label fx:id="lblCondicion2" layoutX="235.0" layoutY="14.0" text="Condicion" />
+                        <ComboBox fx:id="combo2" layoutX="222.0" layoutY="33.0" prefWidth="150.0" />
+                        <RadioButton fx:id="radio2Presion" layoutX="771.0" layoutY="216.0" mnemonicParsing="false" text="PresionArterial" />
+                        <RadioButton fx:id="radio2Glucosa" layoutX="768.0" layoutY="113.0" mnemonicParsing="false" text="Glucosa" />
+                        <Label fx:id="lblMedciones2" layoutX="782.0" layoutY="84.0" text="Mediciones">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="subtitulo2" layoutX="351.0" layoutY="82.0" text="Medicamentos">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="65.0" fitWidth="67.0" layoutX="789.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/monitores-glucosa-icono-07.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imagePresion2" fitHeight="66.0" fitWidth="83.0" layoutX="786.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/corazon-electro.png" />
+                           </image>
+                        </ImageView>
+                        <TableView fx:id="tableReceta1" layoutX="66.0" layoutY="120.0" prefHeight="268.0" prefWidth="666.0">
+                           <columns>
+                              <TableColumn fx:id="ColumMed1" prefWidth="174.4766845703125" text="Medicamento" />
+                              <TableColumn fx:id="ColumPres1" prefWidth="194.27552795410156" text="Presentación" />
+                              <TableColumn fx:id="ColumCantidad1" prefWidth="158.7244873046875" text="Cantidad Unitaria" />
+                              <TableColumn fx:id="Precio1" prefWidth="140.79888916015625" text="Precio Unitario" />
+                           </columns>
+                        </TableView>
+                        <ImageView fx:id="imageMas2" fitHeight="32.0" fitWidth="28.0" layoutX="18.0" layoutY="76.0" onMouseClicked="#VerMed" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/mas.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tab3" text="Horario3">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtHora3" layoutX="26.0" layoutY="33.0" prefHeight="27.0" prefWidth="86.0" promptText=" HH : mm  " />
+                        <Label fx:id="lblhora3" layoutX="29.0" layoutY="13.0" text="Hora" />
+                        <Label fx:id="lblCond3" layoutX="235.0" layoutY="14.0" text="Condicion" />
+                        <ComboBox fx:id="combo3" layoutX="222.0" layoutY="33.0" prefWidth="150.0" />
+                        <RadioButton fx:id="radioPresio3" layoutX="771.0" layoutY="216.0" mnemonicParsing="false" text="PresionArterial" />
+                        <RadioButton fx:id="radioGlucosa3" layoutX="768.0" layoutY="113.0" mnemonicParsing="false" text="Glucosa" />
+                        <Label fx:id="lblMedicacion3" layoutX="782.0" layoutY="84.0" text="Mediciones">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="subtituloMed3" layoutX="351.0" layoutY="82.0" text="Medicamentos">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="65.0" fitWidth="67.0" layoutX="789.0" layoutY="143.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/monitores-glucosa-icono-07.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="66.0" fitWidth="83.0" layoutX="786.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/corazon-electro.png" />
+                           </image>
+                        </ImageView>
+                        <TableView fx:id="tableReceta2" layoutX="66.0" layoutY="120.0" prefHeight="268.0" prefWidth="666.0">
+                           <columns>
+                              <TableColumn fx:id="ColumMed2" prefWidth="157.250732421875" text="Medicamento" />
+                              <TableColumn fx:id="ColumPres2" prefWidth="203.27549743652344" text="Presentación" />
+                              <TableColumn fx:id="ColumCantidad2" prefWidth="171.72451782226562" text="Cantidad Unitaria" />
+                              <TableColumn fx:id="Precio2" prefWidth="132.49853515625" text="Precio Unitario" />
+                           </columns>
+                        </TableView>
+                        <ImageView fx:id="imageMas3" fitHeight="32.0" fitWidth="28.0" layoutX="18.0" layoutY="76.0" onMouseClicked="#VerMed" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Recursos/mas.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Label fx:id="LblTitulo3" layoutX="698.0" layoutY="21.0" text="Luis Sarango" />
+      <Label fx:id="LblTitulo2" layoutX="534.0" layoutY="22.0" text="HistoriaClinica" />
+      <ImageView fx:id="imgaeBack" fitHeight="22.0" fitWidth="21.0" layoutX="34.0" layoutY="15.0" onMouseClicked="#BackPaso4" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="titulo" layoutX="193.0" layoutY="16.0" text="Consultas Médicas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="BtContinuar" layoutX="817.0" layoutY="18.0" mnemonicParsing="false" onAction="#ConsultaP6" prefHeight="23.0" prefWidth="103.0" style="-fx-background-color: #0B3861;" text="Continuar" textFill="#fefeff" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Apple Braille Outline 6 Dot" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.AtividadesTratamientoFXMLController">
+   <children>
+      <ImageView fx:id="ImgBack" fitHeight="24.0" fitWidth="30.0" layoutX="33.0" layoutY="24.0" onMouseClicked="#BackTratamiento" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="LblTitulo1" layoutX="442.0" layoutY="12.0" prefHeight="33.0" prefWidth="131.0" text="Pacientes">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="LblTitulo2" layoutX="652.0" layoutY="18.0" text="HistoriaClinica" />
+      <Label fx:id="LblTitulo3" layoutX="835.0" layoutY="18.0" text="Doctor" />
+      <Button fx:id="btConsultas" layoutX="761.0" layoutY="57.0" mnemonicParsing="false" onAction="#VerConsultas" prefHeight="23.0" prefWidth="131.0" style="-fx-background-color: #0B3861;" text="Proximas Consultas" textFill="WHITE">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="LblTtiuloCentral" layoutX="359.0" layoutY="56.0" text="Actividades del Tratamiento">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblMedicion1" layoutX="155.0" layoutY="214.0" text="Glucosa">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblMedicion2" layoutX="154.0" layoutY="335.0" text="Presión Arterial">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblMedicon" layoutX="155.0" layoutY="157.0" text="Medición" textFill="#000000b0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <ImageView fx:id="imgaMed1" fitHeight="85.0" fitWidth="94.0" layoutX="342.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/monitores-glucosa-icono-07.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgeMed2" fitHeight="72.0" fitWidth="86.0" layoutX="345.0" layoutY="307.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/corazon-electro.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblEstadoHC" layoutX="619.0" layoutY="155.0" text="Estado - Hora - Condición" textFill="#000000b0">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <ScrollPane fx:id="ScrollGlucosa" hbarPolicy="NEVER" layoutX="622.0" layoutY="196.0" prefHeight="100.0" prefWidth="230.0" vbarPolicy="ALWAYS">
+         <content>
+            <VBox fx:id="ContentGlucosa" prefHeight="98.0" prefWidth="210.0" />
+         </content>
+      </ScrollPane>
+      <ScrollPane fx:id="ScrollPresion" hbarPolicy="NEVER" layoutX="622.0" layoutY="329.0" prefHeight="100.0" prefWidth="230.0" vbarPolicy="ALWAYS">
+         <content>
+            <VBox fx:id="ContentPresion" prefHeight="100.0" prefWidth="214.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.RegistroPacienteFXMLController">
+   <children>
+      <Label fx:id="titulo" layoutX="190.0" layoutY="21.0" text="Consultas Médicas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgaeBack" fitHeight="29.0" fitWidth="23.0" layoutX="50.0" layoutY="26.0" onMouseClicked="#BackConsulta" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="LblTitulo2" layoutX="624.0" layoutY="25.0" text="HistoriaClinica" />
+      <Label fx:id="LblTitulo3" layoutX="834.0" layoutY="26.0" text="Luis Sarango" />
+      <Label fx:id="SubTitulo1" layoutX="374.0" layoutY="63.0" text="Registro de Pacientes">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imageCalendar" fitHeight="39.0" fitWidth="54.0" layoutX="318.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/calendar-icon-15.png" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="Scroll" hbarPolicy="NEVER" layoutX="38.0" layoutY="115.0" prefHeight="365.0" prefWidth="881.0" vbarPolicy="ALWAYS">
+        <content>
+          <AnchorPane fx:id="inici" minHeight="0.0" minWidth="0.0" prefHeight="637.0" prefWidth="866.0">
+               <children>
+                  <Label fx:id="LblNombre" layoutX="39.0" layoutY="38.0" text="Nombre Completo" />
+                  <TextField fx:id="txtNombre" layoutX="36.0" layoutY="61.0" prefHeight="27.0" prefWidth="200.0" promptText="Nombre y Apellido" />
+                  <VBox fx:id="vboxTel" layoutX="36.0" layoutY="123.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <TextField fx:id="txtTelef" prefHeight="27.0" prefWidth="175.0" promptText="Teléfono1" />
+                        <TextField fx:id="txtTelef1" prefHeight="27.0" prefWidth="175.0" promptText="Teléfono2" />
+                     </children>
+                  </VBox>
+                  <Label fx:id="LblTelefono" layoutX="40.0" layoutY="100.0" text="Teléfono" />
+                  <Label fx:id="lblCedula" layoutX="607.0" layoutY="37.0" text="Cédula" />
+                  <TextField fx:id="txtCedula" layoutX="605.0" layoutY="59.0" />
+                  <Label fx:id="lblGenero" layoutX="608.0" layoutY="103.0" prefHeight="28.0" prefWidth="45.0" text="Género" />
+                  <RadioButton fx:id="btnMasculino" layoutX="611.0" layoutY="143.0" mnemonicParsing="false" onAction="#Check" text="Masculino" />
+                  <RadioButton fx:id="btnFem" layoutX="742.0" layoutY="142.0" mnemonicParsing="false" text="Femenino" />
+                  <Label fx:id="LblCity" layoutX="608.0" layoutY="173.0" text="Ciudad" />
+                  <Label fx:id="lblDireccion" layoutX="608.0" layoutY="239.0" text="Dirección" />
+                  <TextField fx:id="txtCity" layoutX="606.0" layoutY="200.0" />
+                  <TextArea fx:id="TxtDireccion" layoutX="607.0" layoutY="262.0" prefHeight="60.0" prefWidth="221.0" />
+                  <TextField fx:id="txtEmail1" layoutX="36.0" layoutY="280.0" promptText="Correo2" />
+                  <TextField fx:id="txtEmail" layoutX="36.0" layoutY="239.0" promptText="Correo1" />
+                  <Label fx:id="lblCorreo" layoutX="37.0" layoutY="214.0" text="Correo" />
+                  <Button fx:id="BtRegistrar" layoutX="364.0" layoutY="563.0" mnemonicParsing="false" onAction="#Registrar" prefHeight="23.0" prefWidth="137.0" style="-fx-background-color: #0B3861;" text="Registrar Paciente" textFill="#fefeff" textOverrun="WORD_ELLIPSIS">
+                     <font>
+                        <Font name="Apple Braille Outline 6 Dot" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="txtOcupacion" layoutX="612.0" layoutY="447.0" promptText="Ocupación 1" />
+                  <Label fx:id="lblOcupacion" layoutX="613.0" layoutY="422.0" text="Ocupación" />
+                  <ComboBox fx:id="comboCivil" layoutX="610.0" layoutY="376.0" prefWidth="150.0" />
+                  <Label fx:id="lblCivil" layoutX="609.0" layoutY="348.0" text="Estado Civil Actual" />
+                  <ComboBox fx:id="comboSangre" layoutX="39.0" layoutY="344.0" prefWidth="150.0" />
+                  <Label fx:id="lblSangre" layoutX="40.0" layoutY="322.0" text="Grupo Sanguineo" />
+                  <TextField fx:id="txtOcupacion2" layoutX="614.0" layoutY="488.0" promptText="Ocupación 2" />
+                  <TextField fx:id="txtOcupacion3" layoutX="614.0" layoutY="529.0" promptText="Ocupación 3" />
+                  <Label fx:id="lblFaltan" layoutX="246.0" layoutY="565.0" text="Faltan Datos!" textFill="#f20a0a" visible="false" />
+                  <Label fx:id="lblFechaNa" layoutX="39.0" layoutY="399.0" text="Fecha de Nacimiento" />
+                  <DatePicker fx:id="Fecha" layoutX="39.0" layoutY="431.0" prefHeight="27.0" prefWidth="203.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

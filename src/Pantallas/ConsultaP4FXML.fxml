@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ConsultaP4FXMLController">
+   <children>
+      <Button fx:id="BtContinuar" layoutX="761.0" layoutY="71.0" mnemonicParsing="false" onAction="#ConsultaP5" prefHeight="23.0" prefWidth="103.0" style="-fx-background-color: #0B3861;" text="Continuar" textFill="#fefeff" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Apple Braille Outline 6 Dot" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="titulo" layoutX="222.0" layoutY="24.0" text="Consultas Médicas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgaeBack" fitHeight="22.0" fitWidth="21.0" layoutX="63.0" layoutY="23.0" onMouseClicked="#BackPaso3" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="LblTitulo2" layoutX="638.0" layoutY="29.0" text="HistoriaClinica" />
+      <Label fx:id="LblTitulo3" layoutX="830.0" layoutY="28.0" text="Luis Sarango" />
+      <Label fx:id="lblFechaInicio" layoutX="84.0" layoutY="90.0" text="Fecha Inicio" textFill="#0000009c">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFechaFin" layoutX="85.0" layoutY="271.0" text="Fecha Fin" textFill="#0000009c">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="Calendario1" layoutX="83.0" layoutY="117.0" />
+      <DatePicker fx:id="Calendario2" layoutX="84.0" layoutY="298.0" />
+      <Label fx:id="lblMed" layoutX="398.0" layoutY="87.0" text="Medicación" textFill="#0000009c">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblIndic" layoutX="403.0" layoutY="266.0" text="Indicaciones" textFill="#0000009c">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtMed" layoutX="398.0" layoutY="116.0" prefHeight="121.0" prefWidth="320.0" />
+      <TextArea fx:id="txtInd" layoutX="400.0" layoutY="298.0" prefHeight="136.0" prefWidth="320.0" />
+      <Label fx:id="lblFaltanDatos" layoutX="675.0" layoutY="74.0" text="Faltan Datos" textFill="#e11111" visible="false" />
+   </children>
+</AnchorPane>

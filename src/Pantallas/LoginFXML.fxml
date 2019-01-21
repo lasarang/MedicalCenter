@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="525.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.LoginFXMLController">
+   <children>
+      <ImageView fx:id="ImageFondo" fitHeight="540.0" fitWidth="971.0" layoutX="-7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/Chupalo.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="LbTitulo" layoutX="165.0" layoutY="297.0" text="Login" textFill="#0a2143">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="BtSignIn" layoutX="144.0" layoutY="444.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="20.0" prefWidth="81.0" style="-fx-background-color: #0B3861;" text="Sign In" textFill="#fefeff" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="Apple Braille Outline 6 Dot" size="9.0" />
+         </font>
+      </Button>
+      <TextField fx:id="TxCedula" layoutX="119.0" layoutY="337.0" prefHeight="27.0" prefWidth="129.0" promptText="Cédula" />
+      <PasswordField fx:id="Contrasena" layoutX="118.0" layoutY="392.0" prefHeight="27.0" prefWidth="132.0" promptText="Password" />
+      <Label fx:id="lblIncorrectas" layoutX="267.0" layoutY="446.0" text="Clave o cedula incorrectas!" textFill="#e40e0e" visible="false" />
+      <Label fx:id="lblFaltanCampos" layoutX="274.0" layoutY="446.0" text="No ha llenado los campos !" textFill="#e80b0b" visible="false" />
+   </children>
+</AnchorPane>

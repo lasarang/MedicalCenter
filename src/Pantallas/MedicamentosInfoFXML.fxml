@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" style="-fx-background-color: ;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.MedicamentosInfoFXMLController">
+   <children>
+      <ImageView fx:id="ImgATRAS" fitHeight="22.0" fitWidth="23.0" layoutX="58.0" layoutY="30.0" onMouseClicked="#Regresar" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lbltitulo1" layoutX="381.0" layoutY="27.0" prefHeight="30.0" prefWidth="198.0" text="Medicamentos">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTtiulo2" layoutX="599.0" layoutY="34.0" text="Consulta de medicamentos" textFill="#000000a8" />
+      <TableView fx:id="TblDatos" layoutX="63.0" layoutY="146.0" prefHeight="234.0" prefWidth="813.0">
+        <columns>
+          <TableColumn fx:id="ColmMed" prefWidth="208.49354934692383" text="Medicamento" />
+          <TableColumn fx:id="ColmPre" prefWidth="161.65469360351562" text="Presentación" />
+            <TableColumn fx:id="ColmDis" prefWidth="144.34530639648438" text="C.U disponible" />
+            <TableColumn fx:id="ColmLab" minWidth="0.0" prefWidth="187.66769409179688" text="Laboratorio" />
+            <TableColumn fx:id="ColmSelecionado" minWidth="0.0" prefWidth="112.851806640625" text="Seleccion" />
+        </columns>
+      </TableView>
+      <Button fx:id="btConsulta" layoutX="780.0" layoutY="441.0" mnemonicParsing="false" onAction="#BackConsultaP5" style="-fx-background-color: #0B3861;" text="Volver a Consulta" textFill="WHITE" />
+      <Label fx:id="lblTituloCentral" layoutX="360.0" layoutY="81.0" text="Información de los medicamentos">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTitulo3" layoutX="793.0" layoutY="31.0" prefHeight="22.0" prefWidth="110.0" text="Luis Sarango" />
+      <Button fx:id="btnAgregar" layoutX="64.0" layoutY="409.0" mnemonicParsing="false" onAction="#Agregar" style="-fx-background-color: #a6b5c9,        linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),        linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%); -fx-background-insets: 0 0 -1 0,0,1; -fx-background-radius: 5,5,4; -fx-font-family: &quot;Helvetica&quot;;" text="Agregar a Horario 1" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button fx:id="btnAgregar1" layoutX="249.0" layoutY="409.0" mnemonicParsing="false" onAction="#AgregarH2" style="-fx-background-color: #a6b5c9,        linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),        linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%); -fx-background-insets: 0 0 -1 0,0,1; -fx-background-radius: 5,5,4; -fx-font-family: &quot;Helvetica&quot;;" text="Agregar a  Horario 2" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button fx:id="btnAgregar2" layoutX="432.0" layoutY="409.0" mnemonicParsing="false" onAction="#AgregarH3" style="-fx-background-color: #a6b5c9,        linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),        linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%); -fx-background-insets: 0 0 -1 0,0,1; -fx-background-radius: 5,5,4; -fx-font-family: &quot;Helvetica&quot;;" text="Agregar a  Horario 3" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font></Button> 
+   </children>
+</AnchorPane>

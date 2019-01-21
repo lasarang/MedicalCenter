@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.PacienteAntecedentesFXMLController">
+   <children>
+      <Label fx:id="LblTitulo1" layoutX="427.0" layoutY="18.0" prefHeight="33.0" prefWidth="131.0" text="Pacientes">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="ImgBack" fitHeight="24.0" fitWidth="30.0" layoutX="78.0" layoutY="23.0" onMouseClicked="#BackInfo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="LblTitulo2" layoutX="674.0" layoutY="26.0" text="HistoriaClinica" />
+      <Label fx:id="LblTitulo3" layoutX="831.0" layoutY="27.0" text="Luis Sarango" />
+      <Label fx:id="LblTtiuloCentral" layoutX="407.0" layoutY="59.0" text="Antecedentes">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableDatos" layoutX="88.0" layoutY="148.0" prefHeight="290.0" prefWidth="776.0">
+        <columns>
+          <TableColumn fx:id="ColumPatologia" prefWidth="288.26422119140625" text="Patología" />
+          <TableColumn fx:id="ColumnAnte" prefWidth="315.75128173828125" text="Tipo de Antecedentes " />
+            <TableColumn fx:id="Cie10" minWidth="0.0" prefWidth="172.24871826171875" text="CIE10" />
+        </columns>
+      </TableView>
+      <Button fx:id="btExamenes" layoutX="775.0" layoutY="62.0" mnemonicParsing="false" onAction="#VerExamenes" prefHeight="23.0" prefWidth="104.0" style="-fx-background-color: #0B3861;" text="Ver Examanes" textFill="WHITE">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

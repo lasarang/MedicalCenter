@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ExamanesLabFXMLController">
+   <children>
+      <ImageView fx:id="ImgBack" fitHeight="26.0" fitWidth="34.0" layoutX="46.0" layoutY="15.0" onMouseClicked="#BackAntecedentes" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="LblTitulo1" layoutX="422.0" layoutY="18.0" prefHeight="33.0" prefWidth="131.0" text="Pacientes">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="LblTitulo2" layoutX="677.0" layoutY="24.0" text="HistoriaClinica" />
+      <Label fx:id="LblTitulo3" layoutX="842.0" layoutY="26.0" text="Luis Sarango" />
+      <Label fx:id="LblTtiuloCentral" layoutX="362.0" layoutY="57.0" text="Examenes de Laboratorio">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="btTratamientos" layoutX="769.0" layoutY="60.0" mnemonicParsing="false" onAction="#VerTratamiento" prefHeight="23.0" prefWidth="116.0" style="-fx-background-color: #0B3861;" text="Ver Tratamientos" textFill="WHITE">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <ScrollPane hbarPolicy="NEVER" layoutX="128.0" layoutY="110.0" prefHeight="365.0" prefWidth="713.0" vbarPolicy="ALWAYS">
+        <content>
+          <AnchorPane fx:id="ContenedroGeneral" minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="713.0" />
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -19,7 +19,7 @@ public class Conexion {
     private Connection connection;
     private final String URL="jdbc:mysql://Localhost:3306/MedicalCenterNarcisaDeJesus?autoReconnect=true&useSSL=false",
                          USER="root",
-                         PWD="Programming0";
+                         PWD="betoelperro";
 
     private Conexion(){   
     }

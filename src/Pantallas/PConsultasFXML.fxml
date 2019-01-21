@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.PConsultasFXMLController">
+   <children>
+      <ImageView fx:id="ImgBack" fitHeight="30.0" fitWidth="36.0" layoutX="44.0" layoutY="20.0" onMouseClicked="#BackActividades" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="LblTitulo1" layoutX="436.0" layoutY="26.0" prefHeight="33.0" prefWidth="131.0" text="Pacientes">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="LblTitulo2" layoutX="709.0" layoutY="25.0" text="HistoriaClinica" />
+      <Label fx:id="LblTitulo3" layoutX="840.0" layoutY="26.0" text="Luis Sarango" />
+      <Label fx:id="LblTtiuloCentral" layoutX="393.0" layoutY="81.0" text="Próximas Consultas">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="btSalir" layoutX="777.0" layoutY="458.0" mnemonicParsing="false" onAction="#RegresarMenu" prefHeight="23.0" prefWidth="89.0" style="-fx-background-color: #0B3861;" text="Salir" textFill="WHITE">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Button>
+      <ScrollPane fx:id="Scroll" layoutX="39.0" layoutY="130.0" prefHeight="305.0" prefWidth="872.0" vbarPolicy="ALWAYS">
+         <content>
+            <AnchorPane fx:id="ScrollContent" prefHeight="301.0" prefWidth="855.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

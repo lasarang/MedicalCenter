@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.ConsultasFechaFXMLController">
+   <children>
+      <Label fx:id="LblTitulo3" layoutX="865.0" layoutY="31.0" text="Doctor" />
+      <Label fx:id="LblTitulo2" layoutX="634.0" layoutY="33.0" text="HistoriaClinica" />
+      <ImageView fx:id="imgaeBack" fitHeight="29.0" fitWidth="23.0" layoutX="60.0" layoutY="26.0" onMouseClicked="#BackConsulta" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/atras.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="titulo" layoutX="200.0" layoutY="27.0" text="Consultas Médicas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="Scroll" hbarPolicy="NEVER" layoutX="49.0" layoutY="132.0" prefHeight="344.0" prefWidth="852.0" vbarPolicy="ALWAYS">
+         <content>
+            <VBox fx:id="ContenedorFechas" prefHeight="344.0" prefWidth="835.0" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="lblSubtitulo" layoutX="391.0" layoutY="88.0" text="Consultas Por Fechas">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

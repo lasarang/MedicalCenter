@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="520.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.MenuFXMLController">
+   <children>
+      <HBox fx:id="HBFondo" layoutX="45.0" layoutY="133.0" prefHeight="191.0" prefWidth="858.0" style="-fx-background-color: #E5E9F2;" />
+      <Label fx:id="LbTitulo" alignment="CENTER" layoutX="335.0" layoutY="32.0" prefHeight="35.0" prefWidth="300.0" text="Bienvenido, M.D. Luis Sarango" textAlignment="CENTER">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="LbSubT" layoutX="358.0" layoutY="77.0" text="Seleccione alguna opción para empezar" textFill="#a4a0a0" />
+      <ImageView fx:id="ImageIz" fitHeight="139.0" fitWidth="231.0" layoutX="170.0" layoutY="156.0" onMouseClicked="#IrConsultas" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/Consultas.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="BtFinalizar" layoutX="415.0" layoutY="406.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #0B3861;" text="Finalizar Sesión" textFill="WHITE" />
+      <Label fx:id="lblConsulta" layoutX="217.0" layoutY="303.0" text="Consultas Médicas" />
+      <Label fx:id="lblPacientes" layoutX="628.0" layoutY="302.0" text="Pacientes" />
+      <ImageView fx:id="ImageCentro" fitHeight="139.0" fitWidth="231.0" layoutX="552.0" layoutY="157.0" onMouseClicked="#ChangeScene" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Recursos/Brasalet.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

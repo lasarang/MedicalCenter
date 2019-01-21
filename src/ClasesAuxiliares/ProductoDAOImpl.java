@@ -27,14 +27,14 @@ public class ProductoDAOImpl implements IProductoDAO {
     @Override
     public ArrayList<Producto> readNombre(String nombre) throws Exception {
         medicamentos = new ArrayList<>();
-        medicamento=new Producto();
-        conexion.conectar();
+       
+        //conexion.conectar();
         cs = connection.prepareCall("{CALL readProductoNombre(?)}");
         cs.setString(1, nombre);
         rs = cs.executeQuery();
         
         while (rs.next()) {
-            
+             medicamento=new Producto();
             String nombreComercial = rs.getString("NombreComercial"),
                     presentacion = rs.getString("Presentacion"),
                     lab = rs.getString("Laboratorio");
@@ -52,21 +52,22 @@ public class ProductoDAOImpl implements IProductoDAO {
             
         }
         cs.close();
-        conexion.desconectar();
+        //conexion.desconectar();
         return medicamentos;
     }
 
     @Override
     public ArrayList<Producto> readNombreLab(String nombre, String laboratorio) throws Exception {
         medicamentos = new ArrayList<>();
-        medicamento=new Producto();
-        conexion.conectar();
+        
+        //conexion.conectar();
         cs = connection.prepareCall("{CALL readProductoNombreLab(?, ?)}");
         cs.setString(1, nombre);
         cs.setString(2, laboratorio);
         rs = cs.executeQuery();
 
         while (rs.next()) {
+            medicamento=new Producto();
             String nombreComercial = rs.getString("NombreComercial"),
                     presentacion = rs.getString("Presentacion"),
                     lab = rs.getString("Laboratorio");
@@ -84,7 +85,7 @@ public class ProductoDAOImpl implements IProductoDAO {
         }
 
         cs.close();
-        conexion.desconectar();
+       // conexion.desconectar();
 
         return medicamentos;
 

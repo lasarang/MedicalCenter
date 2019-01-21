@@ -102,6 +102,7 @@ public class Validate {
         cs.close();
         //conexion.desconectar();
         if (idMedico == 0) {
+            System.out.println("beto");
             throw new Exception("No existe doctor con esa cuenta");
         } else {
             return idMedico;
@@ -109,7 +110,7 @@ public class Validate {
 
     }
 
-    public int obtenerNroHistoriaCedula(String cedula) throws Exception {
+    public  int obtenerNroHistoriaCedula(String cedula) throws Exception {
 
         cs = connection.prepareCall("{CALL obtenerNroHistoriaCedula(?)}");
         cs.setString(1, cedula);
