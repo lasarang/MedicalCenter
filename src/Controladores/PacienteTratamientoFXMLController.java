@@ -10,7 +10,10 @@ import ClasesAuxiliares.Horario;
 import ClasesAuxiliares.HorarioAccion;
 import ClasesAuxiliares.Producto;
 import static Controladores.PacienteAntecedentesFXMLController.consultaMed;
+import FamiliaAcciones.Accion;
 import FamiliaAcciones.AdmiMedicina;
+import FamiliaAcciones.MedicionGlucosa;
+import FamiliaAcciones.MedicionPA;
 import FamiliaOperaciones.ConsultaMedica;
 import java.io.IOException;
 import java.net.URL;
@@ -111,27 +114,24 @@ public class PacienteTratamientoFXMLController implements Initializable {
             
             
             
-            for(HorarioAccion obj: ho.getAccionesHorarios()){
+            for(Accion obj: ho.getAcciones()){
                     
                 //System.out.println("sdfsf");
             HBox mediciones = new HBox();
             mediciones.setSpacing(20);
-            
-            
-            /*if(obj instanceof MedicionGlucosa){
-                String palabra = (String)obj;
-            
-            if(palabra.equals("MedicionPA")){
-            
+             
+            if(obj instanceof MedicionGlucosa){
+
             Label medicion1 = new Label("Medicion:         Presion Arterial");
             mediciones.getChildren().add(medicion1);
-            }else if(palabra.equalsIgnoreCase("MedicionGlucosa")){
             
-            Label medicion2 = new Label("Medicion:         Glucosa");
-            mediciones.getChildren().add(medicion2);
-            
-            }
-            }else if(obj instanceof AdmiMedicina){
+            }else if(obj instanceof MedicionPA) {
+                
+                Label medicion2 = new Label("Medicion:         Glucosa");
+                mediciones.getChildren().add(medicion2);
+                
+            } 
+            else if(obj instanceof AdmiMedicina){
             
             AdmiMedicina medicacion = (AdmiMedicina)obj;
             System.out.println(medicacion.toString());
@@ -144,8 +144,9 @@ public class PacienteTratamientoFXMLController implements Initializable {
             }
             
             System.out.println("ndndd");
-            }*/
+            }
             
+           
                  }
                 
             }

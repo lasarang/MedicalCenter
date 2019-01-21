@@ -5,8 +5,15 @@
  */
 package Controladores;
 
+import ClasesAuxiliares.Horario;
+import static Controladores.PacienteAntecedentesFXMLController.consultaMed;
+import FamiliaAcciones.Accion;
+import FamiliaAcciones.MedicionGlucosa;
+import FamiliaAcciones.MedicionPA;
+import FamiliaOperaciones.ConsultaMedica;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -64,7 +71,6 @@ public class AtividadesTratamientoFXMLController implements Initializable {
     private ScrollPane ScrollPresion;
     @FXML
     private VBox ContentPresion;
-   
 
     /**
      * Initializes the controller class.
@@ -72,37 +78,67 @@ public class AtividadesTratamientoFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-      @FXML
-       private void VerConsultas(ActionEvent event) throws IOException{
-       
-        
-    Parent ActividadesParent = FXMLLoader.load(getClass().getResource("/Pantallas/PConsultasFXML.fxml"));
-    Scene  ActividadesScene = new Scene(ActividadesParent);
-    
-    //aqui nos da la infomarcion del stage
-        Stage window = (Stage)( (Node)event.getSource()).getScene().getWindow();
+        MostrarMediciones(consultaMed);
+    }
+
+    @FXML
+    private void VerConsultas(ActionEvent event) throws IOException {
+
+        Parent ActividadesParent = FXMLLoader.load(getClass().getResource("/Pantallas/PConsultasFXML.fxml"));
+        Scene ActividadesScene = new Scene(ActividadesParent);
+
+        //aqui nos da la infomarcion del stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(ActividadesScene);
         window.show();
     }
-    
-       
-  
-       
-       
-    
+
+    private void MostrarMediciones(ArrayList<ConsultaMedica> consulta) {
+
+        for (ConsultaMedica cm : consulta) {
+
+            for (Horario ho : (cm.getTratamiento()).getHorarios()) {
+                System.out.println(ho.toString());
+                for (Accion obj : ho.getAcciones()) {
+                    System.out.println("holaa");
+                    HBox mediciones = new HBox();
+                    HBox medicionePa = new HBox();
+                    mediciones.setSpacing(20);
+                    medicionePa.setSpacing(20);
+                    System.out.println(obj.toString());
+                    if (obj instanceof MedicionGlucosa) {
+                        System.out.println("ponce");
+                        Label Hora = new Label(ho.getHora().toString());
+                        Label Cond = new Label(ho.getCondicionComida());
+                        mediciones.getChildren().addAll(Hora, Cond);
+                        ContentGlucosa.getChildren().add(mediciones);
+                    } else if (obj instanceof MedicionPA) {
+                        Label Hora = new Label(ho.getHora().toString());
+                        Label Cond = new Label(ho.getCondicionComida());
+
+                        medicionePa.getChildren().addAll(Hora, Cond);
+                        ContentPresion.getChildren().add(medicionePa);
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
     @FXML
-    private void BackTratamiento(Event event) throws IOException{
-       
-        
-    Parent BackMenuParent = FXMLLoader.load(getClass().getResource("/Pantallas/PacienteTratamientoFXML.fxml"));
-    Scene  BackMenuScene = new Scene(BackMenuParent);
-    
-    //aqui nos da la infomarcion del stage
-        Stage window = (Stage)( (Node)event.getSource()).getScene().getWindow();
+    private void BackTratamiento(Event event) throws IOException {
+
+        Parent BackMenuParent = FXMLLoader.load(getClass().getResource("/Pantallas/PacienteTratamientoFXML.fxml"));
+        Scene BackMenuScene = new Scene(BackMenuParent);
+
+        //aqui nos da la infomarcion del stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(BackMenuScene);
         window.show();
     }
-    
+
 }

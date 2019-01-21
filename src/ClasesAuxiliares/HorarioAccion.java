@@ -67,10 +67,9 @@ public class HorarioAccion {
     public void setAccion(Accion accion) {
         this.accion = accion;
     }
-
+    /*
     @Override
     public String toString() {
-        return "HorarioAccion{" + "idHorarioAccion=" + idHorarioAccion + ", idAgenda=" + idAgenda + ", idActivity=" + idActivity + ", fecha=" + fecha + ", horaEjecucion=" + horaEjecucion + ", accion=" + accion + '}';
-    }
-
+    return "HorarioAccion{" + "idHorarioAccion=" + idHorarioAccion + ", idAgenda=" + idAgenda + ", idActivity=" + idActivity + ", fecha=" + fecha + ", horaEjecucion=" + horaEjecucion + ", accion=" + accion + '}';
+    }*/
 }

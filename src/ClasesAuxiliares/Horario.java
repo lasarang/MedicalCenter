@@ -69,7 +69,6 @@ public class Horario {
         this.accionesHorarios = accionesHorarios;
     }
 
-
     @Override
     public String toString() {
         return "Horario{" + "idHorario=" + idHorario + ", idSchedule=" + idSchedule + ", hora=" + hora + ", condicionComida=" + condicionComida + ", acciones=" + acciones + ", accionesHorarios=" + accionesHorarios + '}';

@@ -107,7 +107,7 @@ public class PacienteAntecedentesFXMLController implements Initializable {
         try {
             System.out.println(cedula.toString());
             consultaMed = pdaoConsulta.readAllConsultasPaciente(cedula);
-           
+            System.out.println(consultaMed.toString());
             //System.out.println(pdaoConsulta.readAllConsultasPaciente("1782723923").toString() + " AAAAAAAAAAAA" );
              for(ConsultaMedica c : consultaMed){
                  for(Diagnostico dg : c.getDiagnosticos()){

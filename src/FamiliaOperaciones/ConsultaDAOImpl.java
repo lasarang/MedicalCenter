@@ -52,6 +52,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
     private ArrayList<String> parametros;
     private ArrayList<Horario> horarios;
     private ArrayList<HorarioAccion> horariosAcciones;
+    private ArrayList<Accion> acciones;
     private ArrayList<Producto> medicamentos;
     private ArrayList<ConsultaMedica> consultasObtenidas;
     private ArrayList<Cita> proximasConsultas;
@@ -494,25 +495,82 @@ public class ConsultaDAOImpl implements IConsultaDAO {
         cs2 = connection.prepareCall("{CALL readTratamientoHorarios(?)}");
         cs2.setInt(1, idTratamiento);
         rs2 = cs2.executeQuery();
-
+       
         while (rs2.next()) {
-
+            
             int idHorario = rs2.getInt("idHorario");
+            System.out.println("horario #: "+idHorario);
             Time hora = (Time) rs2.getObject("Hora");
             String condicionComida = rs2.getString("CondicionComida");
             horario = new Horario();
             horario.setIdHorario(idHorario);
             horario.setHora(hora.toLocalTime());
             horario.setCondicionComida(condicionComida);
-
+            horario.setAcciones(readAcciones(idHorario));//este jode todo
             horario.setAccionesHorarios(readHorarioAcciones(idHorario));
             //System.out.println("Horario: " + horario);
             horarios.add(horario);
+           
         }
 
         return horarios;
     }
+    
+    ////aqui se jode la huevada////
+     private ArrayList<Accion> readAcciones(int idHorario) throws Exception {
+        acciones = new ArrayList<>();
+        cs3 = connection.prepareCall("{CALL readAcciones(?)}");
+        cs3.setInt(1, idHorario);
+        rs3 = cs3.executeQuery();
 
+        while (rs3.next()) {
+
+            int idAccion = rs3.getInt("idAccion");
+            String tipo = rs3.getString("Tipo");
+            if (tipo.equals("AdmiMedicina")) {
+                System.out.println("dentro de admi medicina");
+                am = new AdmiMedicina();
+                am.setIdAdmiMedicine(idAccion);
+                am.setMedicamentos(readMedicamentos(idAccion));
+                acciones.add(am);
+
+            } else if (tipo.equals("MedicionPA")) {
+                System.out.println("dentro de medicion pa");
+                acciones.add(new MedicionPA());
+
+            } else if (tipo.equals("MedicionGlucosa")) {
+                System.out.println("dentro de medicion glucosa");
+                acciones.add(new MedicionGlucosa());
+                
+            }
+        }
+
+        return acciones;
+
+    }
+//////aqui tambien se jode ////
+     
+     private ArrayList<Producto> readMedicamentos(int idAccion) throws Exception {
+        medicamentos = new ArrayList<>();
+        cs4 = connection.prepareCall("{CALL readAdmiMedicinaMedicamentos(?)}");
+        cs4.setInt(1, idAccion);
+        rs4 = cs4.executeQuery();
+        while (rs4.next()) {
+            String nombreComercial = rs4.getString("NombreComercial"),
+                    presentacion = rs4.getString("Presentacion"),
+                    laboratorio = rs4.getString("Laboratorio");
+            int cantidad = rs4.getInt("Cantidad");
+            medicamento = new Producto();
+            medicamento.setNombreComercial(nombreComercial);
+            medicamento.setPresentacion(presentacion);
+            medicamento.setLaboratorio(laboratorio);
+            medicamento.setCantidad(cantidad);
+            medicamentos.add(medicamento);
+        }
+
+        return medicamentos;
+    }
+     
     ////////////////////////////////////////////////////////////////////////////////////////////
     private ArrayList<HorarioAccion> readHorarioAcciones(int idHorario) throws Exception {
         horariosAcciones = new ArrayList<>();
