@@ -102,6 +102,22 @@ public class ConsultaPaso1FXMLController implements Initializable {
 
     
     public static ArrayList<String> datos = new ArrayList<>();
+    @FXML
+    private Label lblFc;
+    @FXML
+    private Label lblCent;
+    @FXML
+    private Label lblFR;
+    @FXML
+    private Label lblUnidades;
+    @FXML
+    private Label lblCm;
+    @FXML
+    private Label lblKg;
+    @FXML
+    private Label lblSis;
+    @FXML
+    private Label lblDT;
     /**
      * Initializes the controller class.
      */

@@ -35,7 +35,7 @@
       </Button>
       <ScrollPane fx:id="Scroll" layoutX="39.0" layoutY="130.0" prefHeight="305.0" prefWidth="872.0" vbarPolicy="ALWAYS">
          <content>
-            <AnchorPane fx:id="ScrollContent" prefHeight="301.0" prefWidth="855.0" />
+            <VBox fx:id="ScrollContent" prefHeight="303.0" prefWidth="852.0" />
          </content>
       </ScrollPane>
    </children>

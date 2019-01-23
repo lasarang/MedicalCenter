@@ -57,19 +57,11 @@
             <Image url="@../Recursos/corazon-electro.png" />
          </image>
       </ImageView>
-      <Label fx:id="lblEstadoHC" layoutX="619.0" layoutY="155.0" text="Estado - Hora - Condición" textFill="#000000b0">
+      <Label fx:id="lblEstadoHC" layoutX="622.0" layoutY="155.0" text="Hora - Condición" textFill="#000000b0">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <ScrollPane fx:id="ScrollGlucosa" hbarPolicy="NEVER" layoutX="622.0" layoutY="196.0" prefHeight="100.0" prefWidth="230.0" vbarPolicy="ALWAYS">
-         <content>
-            <VBox fx:id="ContentGlucosa" prefHeight="98.0" prefWidth="210.0" />
-         </content>
-      </ScrollPane>
-      <ScrollPane fx:id="ScrollPresion" hbarPolicy="NEVER" layoutX="622.0" layoutY="329.0" prefHeight="100.0" prefWidth="230.0" vbarPolicy="ALWAYS">
-         <content>
-            <VBox fx:id="ContentPresion" prefHeight="100.0" prefWidth="214.0" />
-         </content>
-      </ScrollPane>
+      <ListView fx:id="listGlucosa" layoutX="617.0" layoutY="191.0" prefHeight="107.0" prefWidth="250.0" />
+      <ListView fx:id="listPresion" layoutX="618.0" layoutY="320.0" prefHeight="107.0" prefWidth="250.0" />
    </children>
 </AnchorPane>

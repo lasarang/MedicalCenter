@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -25,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -63,15 +66,15 @@ public class AtividadesTratamientoFXMLController implements Initializable {
     private ImageView imgeMed2;
     @FXML
     private Label lblEstadoHC;
+   
+    private ObservableList<String> PreCa = FXCollections.observableArrayList();
+    
+    private ObservableList<String> glucosa = FXCollections.observableArrayList();
     @FXML
-    private ScrollPane ScrollGlucosa;
+    private ListView<String> listGlucosa;
     @FXML
-    private VBox ContentGlucosa;
-    @FXML
-    private ScrollPane ScrollPresion;
-    @FXML
-    private VBox ContentPresion;
-
+    private ListView<String> listPresion;
+   
     /**
      * Initializes the controller class.
      */
@@ -79,6 +82,8 @@ public class AtividadesTratamientoFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         MostrarMediciones(consultaMed);
+        listGlucosa.setItems(glucosa);
+        listPresion.setItems(PreCa);
     }
 
     @FXML
@@ -94,37 +99,30 @@ public class AtividadesTratamientoFXMLController implements Initializable {
     }
 
     private void MostrarMediciones(ArrayList<ConsultaMedica> consulta) {
-
+       
         for (ConsultaMedica cm : consulta) {
-
             for (Horario ho : (cm.getTratamiento()).getHorarios()) {
-                System.out.println(ho.toString());
-                for (Accion obj : ho.getAcciones()) {
-                    System.out.println("holaa");
-                    HBox mediciones = new HBox();
-                    HBox medicionePa = new HBox();
-                    mediciones.setSpacing(20);
-                    medicionePa.setSpacing(20);
-                    System.out.println(obj.toString());
-                    if (obj instanceof MedicionGlucosa) {
-                        System.out.println("ponce");
-                        Label Hora = new Label(ho.getHora().toString());
-                        Label Cond = new Label(ho.getCondicionComida());
-                        mediciones.getChildren().addAll(Hora, Cond);
-                        ContentGlucosa.getChildren().add(mediciones);
-                    } else if (obj instanceof MedicionPA) {
-                        Label Hora = new Label(ho.getHora().toString());
-                        Label Cond = new Label(ho.getCondicionComida());
 
-                        medicionePa.getChildren().addAll(Hora, Cond);
-                        ContentPresion.getChildren().add(medicionePa);
+                for (Accion obj : ho.getAcciones()) {
+                    
+                    if (obj instanceof MedicionGlucosa) {
+                        String Infog = ho.getHora().toString() + "   " + ho.getCondicionComida();
+                        if(!glucosa.contains(Infog)){
+                                  
+                                  glucosa.add(Infog);        
+                        }
+
+                    } else if (obj instanceof MedicionPA) {
+                        String InfoPa = ho.getHora().toString() + "   " + ho.getCondicionComida();
+                        if(!PreCa.contains(InfoPa)){
+                                  PreCa.add(InfoPa);        
+                        }
 
                     }
 
                 }
 
-            }
-
+            }    
         }
 
     }

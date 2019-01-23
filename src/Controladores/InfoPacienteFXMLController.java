@@ -94,6 +94,18 @@ public class InfoPacienteFXMLController implements Initializable {
      private ConsultaDAOImpl pdaoConsulta = new ConsultaDAOImpl();
      
      public  static String cedula = "";
+    @FXML
+    private ImageView imgaUser;
+    @FXML
+    private ImageView ImageHouse;
+    @FXML
+    private Label lblDatosPer;
+    @FXML
+    private Label lblDomicilio;
+    @FXML
+    private ImageView ImgaeContact;
+    @FXML
+    private Label lblContacto;
 
     /**
      * Initializes the controller class.
@@ -117,11 +129,7 @@ public class InfoPacienteFXMLController implements Initializable {
 
                 Scene  MenuScene = new Scene(Menu);
 
-                /* PacienteAntecedentesFXMLController p = loader.getController();
-                
-                System.out.println(cedula);
-                p.GuardarPaciente(cedula);
-                */
+              
                 Stage window = (Stage)( (Node)event.getSource()).getScene().getWindow();
                 window.setScene(MenuScene);
                 window.show();

@@ -41,14 +41,14 @@
       <Label fx:id="lbl2" layoutX="418.0" layoutY="138.0" text="Relación" />
       <Label fx:id="lbl3" layoutX="718.0" layoutY="138.0" text="Motivo de Consulta" />
       <Label layoutX="424.0" layoutY="237.0" />
-      <Label fx:id="titulo1" layoutX="377.0" layoutY="228.0" text="Medicion de Signos Vitales">
+      <Label fx:id="titulo1" layoutX="377.0" layoutY="228.0" text="Medición de Signos Vitales">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <Label fx:id="lbl4" layoutX="117.0" layoutY="290.0" text="Frecuencia Cardiaca" />
       <Label fx:id="lbl5" layoutX="407.0" layoutY="285.0" prefHeight="28.0" prefWidth="170.0" text="Frecuencia Respiratoria" />
-      <Label fx:id="lbl7" layoutX="117.0" layoutY="355.0" text="Saturacion de Oxigeno" />
+      <Label fx:id="lbl7" layoutX="117.0" layoutY="355.0" text="Saturación de Oxígeno" />
       <Label fx:id="lbl8" layoutX="406.0" layoutY="357.0" text="Temperatura" />
       <Label fx:id="lbl9" layoutX="120.0" layoutY="411.0" text="Talla" />
       <Label fx:id="lbl10" layoutX="406.0" layoutY="412.0" text="Peso" />
@@ -67,8 +67,16 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label fx:id="lblSistolica" layoutX="738.0" layoutY="330.0" text="Sistolica" />
-      <Label fx:id="lblDiastolica" layoutX="738.0" layoutY="390.0" text="Diastolica" />
+      <Label fx:id="lblSistolica" layoutX="738.0" layoutY="330.0" text="Sistólica" />
+      <Label fx:id="lblDiastolica" layoutX="738.0" layoutY="390.0" text="Diastólica" />
       <Label fx:id="lblFaltanDtatos" layoutX="590.0" layoutY="71.0" text="Faltan Datos!" textFill="#eb0e0e" visible="false" />
+      <Label fx:id="lblFc" layoutX="300.0" layoutY="317.0" text="lat/min" />
+      <Label fx:id="lblCent" layoutX="596.0" layoutY="383.0" text="°C" />
+      <Label fx:id="lblFR" layoutX="590.0" layoutY="316.0" text="res/min" />
+      <Label fx:id="lblUnidades" layoutX="299.0" layoutY="384.0" text="U" />
+      <Label fx:id="lblCm" layoutX="254.0" layoutY="436.0" text="cm" />
+      <Label fx:id="lblKg" layoutX="544.0" layoutY="437.0" text="kg" />
+      <Label fx:id="lblSis" layoutX="870.0" layoutY="358.0" text="mmHg" />
+      <Label fx:id="lblDT" layoutX="870.0" layoutY="412.0" text="mmHg" />
    </children>
 </AnchorPane>

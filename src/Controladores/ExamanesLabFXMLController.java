@@ -54,7 +54,7 @@ public class ExamanesLabFXMLController implements Initializable {
     @FXML
     private Button btTratamientos;
     @FXML
-    private AnchorPane ContenedroGeneral;
+    private VBox ContenedroGeneral;
 
     /**
      * Initializes the controller class.
@@ -62,7 +62,7 @@ public class ExamanesLabFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        System.out.println(consultaMed.toString());
+        
         CargarDatos(consultaMed);
         
     }    
@@ -130,6 +130,7 @@ public class ExamanesLabFXMLController implements Initializable {
               subcontenedor.setAlignment(Pos.CENTER);
               subcontenedor.setLayoutX(60);
               ContenedroGeneral.getChildren().add(subcontenedor);
+              ContenedroGeneral.setSpacing(20);
 
           }
       } 

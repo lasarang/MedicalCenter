@@ -83,7 +83,7 @@ public class MenuFXMLController implements Initializable {
     
     
     public void Imprimir(String texto){
-        System.out.println(texto);
+       // System.out.println(texto);
         //lblConsulta.setText(texto);
     }
     

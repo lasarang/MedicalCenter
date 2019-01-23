@@ -55,7 +55,7 @@ public class PConsultasFXMLController implements Initializable {
     @FXML
     private ScrollPane Scroll;
     @FXML
-    private AnchorPane ScrollContent;
+    private VBox ScrollContent;
 
     /**
      * Initializes the controller class.
@@ -87,6 +87,7 @@ public class PConsultasFXMLController implements Initializable {
         for(ConsultaMedica cm : consultas){
             VBox centro = new VBox();
             for(Cita cita :cm.getProximasConsultas()){
+                
                 int x = cm.getProximasConsultas().indexOf(cita) +1;
                 Label idconsulta = new Label("Cita :     " +  x  );
                 idconsulta.setFont(Font.font(30));
@@ -102,7 +103,7 @@ public class PConsultasFXMLController implements Initializable {
                 Descri.setFont(Font.font(25));
                 
                  subcentro.getChildren().addAll(Descrip,Descri);
-                 subcentro.setMinSize(150, 80);
+                 subcentro.setMinSize(350, 80);
                 centro.getChildren().addAll(idconsulta,hora,subcentro);
                 centro.setPadding(new Insets(20));
                 

@@ -33,9 +33,9 @@
          </font>
       </Button>
       <ScrollPane hbarPolicy="NEVER" layoutX="128.0" layoutY="110.0" prefHeight="365.0" prefWidth="713.0" vbarPolicy="ALWAYS">
-        <content>
-          <AnchorPane fx:id="ContenedroGeneral" minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="713.0" />
-        </content>
+         <content>
+            <VBox fx:id="ContenedroGeneral" prefHeight="362.0" prefWidth="695.0" />
+         </content>
       </ScrollPane>
    </children>
 </AnchorPane>

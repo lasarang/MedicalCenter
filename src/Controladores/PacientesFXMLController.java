@@ -88,9 +88,6 @@ public class PacientesFXMLController implements Initializable {
     public void BusquedaPaciente(ActionEvent event){
         
         try {
-            //System.out.println(valido.obtenerNroHistoriaCedula("0913499742"));
-            
-            //System.out.println(texfieldCedula.getText());
             while(valido.obtenerNroHistoriaCedula(texfieldCedula.getText()) >=1 ){
                 
                 FXMLLoader loader = new  FXMLLoader(getClass().getResource("/Pantallas/InfoPacienteFXML.fxml"));

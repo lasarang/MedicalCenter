@@ -277,7 +277,7 @@ public class ConsultasP3FXMLController implements Initializable {
            Hemostaticos.setSpacing(10);
             datos.setOnMouseClicked(evento->{
                 if(datos.isSelected()){
-                    System.out.println(datos.getText());
+                    //System.out.println(datos.getText());
                     examenes.add(datos.getText());
                 }
                 
@@ -304,7 +304,7 @@ public class ConsultasP3FXMLController implements Initializable {
            Lipidico.setSpacing(10);
             datos.setOnMouseClicked(evento->{
                 if(datos.isSelected()){
-                    System.out.println(datos.getText());
+                   // ..System.out.println(datos.getText());
                     examenes.add(datos.getText());
                 }
                 
@@ -332,7 +332,7 @@ ArrayList<String> serologicos=new ArrayList<String>() {{
            Serologicos.setSpacing(10);
             datos.setOnMouseClicked(evento->{
                 if(datos.isSelected()){
-                    System.out.println(datos.getText());
+                   // System.out.println(datos.getText());
                     examenes.add(datos.getText());
                 }
                 
@@ -375,7 +375,7 @@ ArrayList<String> bioquimicos = new ArrayList<String>() {{
            Bioquimicos.setSpacing(10);
             datos.setOnMouseClicked(evento->{
                 if(datos.isSelected()){
-                    System.out.println(datos.getText());
+                    //System.out.println(datos.getText());
                     examenes.add(datos.getText());
                 }
                 
@@ -414,7 +414,7 @@ ArrayList<String> enzimas = new ArrayList<String>() {{
            Enzimas.setSpacing(10);
             datos.setOnMouseClicked(evento->{
                 if(datos.isSelected()){
-                    System.out.println(datos.getText());
+                    //System.out.println(datos.getText());
                     examenes.add(datos.getText());
                 }
                 
@@ -467,7 +467,7 @@ ArrayList<String> perfilInmunologico=new ArrayList<String>() {{
            Inmuologico.setSpacing(10);
             datos.setOnMouseClicked(evento->{
                 if(datos.isSelected()){
-                    System.out.println(datos.getText());
+                   // System.out.println(datos.getText());
                     examenes.add(datos.getText());
                 }
                 
@@ -497,7 +497,7 @@ ArrayList<String> electrolitos = new ArrayList<String>() {{
            Electrolito.setSpacing(10);
             datos.setOnMouseClicked(evento->{
                 if(datos.isSelected()){
-                    System.out.println(datos.getText());
+                    //System.out.println(datos.getText());
                     examenes.add(datos.getText());
                 }
                 

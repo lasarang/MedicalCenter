@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/Users/juanjimenez/Desktop/5S/ARP2/MedicalCenter/src/Controladores/ActividadFXMLController.java</file>
-            <file>file:/Users/juanjimenez/Desktop/5S/ARP2/MedicalCenter/src/appmedicalcenter/AppMedicalCenter.java</file>
-            <file>file:/Users/juanjimenez/Desktop/5S/ARP2/MedicalCenter/src/Controladores/ConsultaP4FXMLController.java</file>
-            <file>file:/Users/juanjimenez/Desktop/5S/ARP2/MedicalCenter/src/Controladores/ProximaConsultaFXMLController.java</file>
-            <file>file:/Users/juanjimenez/Desktop/5S/ARP2/MedicalCenter/src/FamiliaOperaciones/ConsultaDAOImpl.java</file>
-            <file>file:/Users/juanjimenez/Desktop/5S/ARP2/MedicalCenter/src/Controladores/LoginFXMLController.java</file>
-            <file>file:/Users/juanjimenez/Desktop/5S/ARP2/MedicalCenter/src/ClasesAuxiliares/Tratamiento.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

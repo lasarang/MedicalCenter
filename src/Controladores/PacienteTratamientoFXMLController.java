@@ -91,7 +91,7 @@ public class PacienteTratamientoFXMLController implements Initializable {
             Fechas.setPadding(new Insets(15));
             ScrolContent.getChildren().add(Fechas);
             /////Fin contenedor Fechas/////
-            System.out.println("Horarios: \n " +   cm.getTratamiento().getHorarios() );//.getHorarios().get(0).getCondicionComida() );
+            //System.out.println("Horarios: \n " +   cm.getTratamiento().getHorarios() );//.getHorarios().get(0).getCondicionComida() );
              for(Horario ho : cm.getTratamiento().getHorarios()){
             VBox ContenedorHorario =  new VBox();
             ////titulo//////
@@ -134,16 +134,16 @@ public class PacienteTratamientoFXMLController implements Initializable {
             else if(obj instanceof AdmiMedicina){
             
             AdmiMedicina medicacion = (AdmiMedicina)obj;
-            System.out.println(medicacion.toString());
+           // System.out.println(medicacion.toString());
             for(Producto p :  medicacion.getMedicamentos() ){
             Label nombre = new Label("Nombre:              " + p.getNombreComercial() );
             Label Presentacion = new Label("Presentacion:              " + p.getPresentacion() );
             Label lab = new Label("Laboratorio:                         " + p.getLaboratorio() );
-            System.out.println("beto");
+            //System.out.println("beto");
             ScrolContent.getChildren().addAll(nombre,Presentacion,lab);
             }
             
-            System.out.println("ndndd");
+            //System.out.println("ndndd");
             }
             
            

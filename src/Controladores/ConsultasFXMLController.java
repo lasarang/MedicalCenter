@@ -145,8 +145,8 @@ public class ConsultasFXMLController implements Initializable {
     @FXML
     private void ConsultaP1(Event event) throws IOException{
         try {
-            System.out.println(Cedula.getText());
-            System.out.println(validar.obtenerNroHistoriaCedula(Cedula.getText()));
+           // System.out.println(Cedula.getText());
+            //System.out.println(validar.obtenerNroHistoriaCedula(Cedula.getText()));
             if(!Cedula.getText().equals("") && validar.obtenerNroHistoriaCedula(Cedula.getText()) >=1){
                 
                 Nhistoria  = validar.obtenerNroHistoriaCedula(Cedula.getText()); ///nhistoria statica 

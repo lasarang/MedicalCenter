@@ -87,12 +87,12 @@ public class MedicamentosFXMLController implements Initializable {
     if(!txfNmed.getText().equals("") || !txfNlab.getText().endsWith(""))  {  
          
          if(txfNmed.isVisible() && !txfNlab.isVisible()){
-             System.out.println("beto");
+            // System.out.println("beto");
              
              medicinas = producto.readNombre(txfNmed.getText());
              
          }else if(txfNmed.isVisible() && txfNlab.isVisible()){
-             System.out.println("betox");
+             //System.out.println("betox");
              medicinas = producto.readNombreLab(txfNmed.getText(), txfNlab.getText());
             
             // System.out.println(medicinas.toString());

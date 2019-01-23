@@ -301,14 +301,14 @@ public class ConsultasPaso2FXMLController implements Initializable {
        
        if( !(nbIn.getText()).equals(" ")  && !(DesIn.getText()).equals(" ")     
                 ){ //!(combo_categ.getValue()).equals(" ")
-           System.out.println(nbIn.getText());
-           
+           //System.out.println(nbIn.getText());
+           //
                  Guardar.setOnMouseClicked(EventoG ->{
                   
-                     System.out.println(combo_categ.getValue());
+                     //System.out.println(combo_categ.getValue());
                 diagnosticos.add(new  Diagnostico(nbIn.getText(),combo_categ.getValue() ,DesIn.getText()));
                 items.add(new  Diagnostico(nbIn.getText(),combo_categ.getValue() ,DesIn.getText()));
-                     System.out.println(diagnosticos.toString());
+                    // System.out.println(diagnosticos.toString());
                 stage.close();
       
                  });

@@ -105,10 +105,7 @@ public class PacienteAntecedentesFXMLController implements Initializable {
      private  void CrearTable(ObservableList<Diagnostico> lista) {
            
         try {
-            System.out.println(cedula.toString());
             consultaMed = pdaoConsulta.readAllConsultasPaciente(cedula);
-            System.out.println(consultaMed.toString());
-            //System.out.println(pdaoConsulta.readAllConsultasPaciente("1782723923").toString() + " AAAAAAAAAAAA" );
              for(ConsultaMedica c : consultaMed){
                  for(Diagnostico dg : c.getDiagnosticos()){
                  lista.add(dg);
@@ -164,40 +161,5 @@ public class PacienteAntecedentesFXMLController implements Initializable {
     }
     
     
-    
-    
-    /* public ObservableList<String>  SetDatosTable(ArrayList<ConsultaMedica> consultas){
-    
-    ObservableList<String> Temporal = FXCollections.observableArrayList();
-    
-    System.out.println(consultas);
-    for(ConsultaMedica cm : consultas){
-    System.out.println("8");
-    ArrayList<String[]> aFamiliares = cm.getDiagnosticos().get("Familiares");
-    System.out.println(aFamiliares.toString());
-    System.out.println("9");
-    for(String[] antFa : aFamiliares ){
-    System.out.println("10");
-    Temporal.add(antFa[0]);
-    Temporal.add("Familiar");
-    Temporal.add(antFa[1]);
-    
-    }
-    ArrayList<String[]> apersonales = cm.getDiagnosticos().get("Personales");
-    for(String[] antPer : apersonales ){
-    Temporal.add(antPer[0]);
-    Temporal.add("Personal");
-    Temporal.add(antPer[1]);
-    
-    }
-    
-    }
-    
-    return Temporal;
-    
-    
-    
-    
-    }*/
     
 }
