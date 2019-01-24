@@ -192,7 +192,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
             cs.close();
 
             int idAgenda = Integer.parseInt(validate.ultimoId("Horarios"));
-            System.out.println("Horario #: " + idAgenda);
+           // System.out.println("Horario #: " + idAgenda);
 
             int c = 1;
             for (LocalDate fecha : tratamiento.getFechas()) {
@@ -204,7 +204,7 @@ public class ConsultaDAOImpl implements IConsultaDAO {
                     cs2.close();
 
                     int idAccion = Integer.parseInt(validate.ultimoId("Acciones"));
-                    System.out.println("idAcccion: " + idAccion);
+                   // System.out.println("idAcccion: " + idAccion);
 
                     //Accion: AdmiMedicina
                     if (accion instanceof AdmiMedicina) {

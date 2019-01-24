@@ -74,58 +74,104 @@ public class LoginFXMLController implements Initializable {
     /*    public void CargarPantalla() throws IOException{
     
     }*/
+//    @FXML
+//    public void handleButtonAction(ActionEvent event) throws IOException {
+//        // lblIncorrectas.setVisible(true);
+//
+//       // if (!TxCedula.getText().equals("") && !Contrasena.getText().equals("")) {
+//       
+//       
+//       FXMLLoader loader = new FXMLLoader(getClass().getResource("/Pantallas/MenuFXML.fxml"));
+//
+//                    Parent Menu = (Parent) loader.load();
+//                    //System.out.println(inicio.toString());
+//
+//                    Scene MenuScene = new Scene(Menu);
+//
+//                    inicio = LocalDateTime.now();
+//                    //idMedico = validar.esUsuarioMedico(TxCedula.getText(), Contrasena.getText());
+//                    System.out.println(idMedico);
+//                    MenuFXMLController p = loader.getController();
+//
+//
+//
+//                    //aqui nos da la infomarcion del stage
+//                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//                    window.setScene(MenuScene);
+//                    window.show();
+//            try {
+//                System.out.println(TxCedula.getText() + Contrasena.getText());
+//
+//        //if (!TxCedula.getText().equals(" ") && !Contrasena.getText().equals(" ") ) {
+////&& validar.esUsuarioMedico(TxCedula.getText(), Contrasena.getText()) > 0
+//                    // System.out.println(idmed);
+//                    
+//
+//                    /* } else {
+//                    
+//                    lblIncorrectas.setVisible(false);
+//                    lblFaltanCampos.setVisible(true);
+//                    
+//                    }*/
+//
+//            } catch (Exception ex) {
+//
+//                lblIncorrectas.setVisible(true);
+//                lblFaltanCampos.setVisible(false);
+//            }
+///////hasta aqui la validacion de la contrasena/////   
+//
+///*  } else {
+//lblIncorrectas.setVisible(false);
+//lblFaltanCampos.setVisible(true);
+//
+//}*/
+//
+//    }
+    
+    
     @FXML
-    public void handleButtonAction(ActionEvent event) throws IOException {
+    public void handleButtonAction(ActionEvent event) throws IOException, Exception {
         // lblIncorrectas.setVisible(true);
 
-       // if (!TxCedula.getText().equals("") && !Contrasena.getText().equals("")) {
-       
-       
-       FXMLLoader loader = new FXMLLoader(getClass().getResource("/Pantallas/MenuFXML.fxml"));
+        if (!TxCedula.getText().equals("") && !Contrasena.getText().equals("")) {
 
-                    Parent Menu = (Parent) loader.load();
-                    //System.out.println(inicio.toString());
+            System.out.println(TxCedula.getText() + Contrasena.getText());
+            System.out.println("validacion "+validar.esUsuarioMedico(TxCedula.getText(), Contrasena.getText()));
+            if (validar.esUsuarioMedico(TxCedula.getText(), Contrasena.getText())) {
 
-                    Scene MenuScene = new Scene(Menu);
+                // System.out.println(idmed);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Pantallas/MenuFXML.fxml"));
 
-                    inicio = LocalDateTime.now();
-                    //idMedico = validar.esUsuarioMedico(TxCedula.getText(), Contrasena.getText());
-                    System.out.println(idMedico);
-                    MenuFXMLController p = loader.getController();
+                Parent Menu = (Parent) loader.load();
+                //System.out.println(inicio.toString());
 
+                Scene MenuScene = new Scene(Menu);
 
+                inicio = LocalDateTime.now();
 
-                    //aqui nos da la infomarcion del stage
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    window.setScene(MenuScene);
-                    window.show();
-            try {
-                System.out.println(TxCedula.getText() + Contrasena.getText());
+                MenuFXMLController p = loader.getController();
 
-        //if (!TxCedula.getText().equals(" ") && !Contrasena.getText().equals(" ") ) {
-//&& validar.esUsuarioMedico(TxCedula.getText(), Contrasena.getText()) > 0
-                    // System.out.println(idmed);
-                    
+                p.Imprimir(TxCedula.getText());
 
-                    /* } else {
-                    
-                    lblIncorrectas.setVisible(false);
-                    lblFaltanCampos.setVisible(true);
-                    
-                    }*/
+                //aqui nos da la infomarcion del stage
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(MenuScene);
+                window.show();
 
-            } catch (Exception ex) {
+            } else {
 
-                lblIncorrectas.setVisible(true);
-                lblFaltanCampos.setVisible(false);
+                lblIncorrectas.setVisible(false);
+                lblFaltanCampos.setVisible(true);
+
             }
+
 /////hasta aqui la validacion de la contrasena/////   
+        } else {
+            lblIncorrectas.setVisible(false);
+            lblFaltanCampos.setVisible(true);
 
-/*  } else {
-lblIncorrectas.setVisible(false);
-lblFaltanCampos.setVisible(true);
-
-}*/
+        }
 
     }
 

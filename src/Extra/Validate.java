@@ -90,23 +90,22 @@ public class Validate {
 
     }
 
-    public int esUsuarioMedico(String cedula, String clave) throws Exception {
-        int idMedico;
+   public boolean esUsuarioMedico(String cedula, String clave) throws Exception {
+        String idMedico = "";
 
         cs = connection.prepareCall("{CALL verificarMedico(?, ?)}");
         cs.setString(1, cedula);
         cs.setString(2, clave);
         rs = cs.executeQuery();
-        rs.next();
-        idMedico = rs.getInt("idMedico");
-        cs.close();
-        //conexion.desconectar();
-        if (idMedico == 0) {
-            System.out.println("beto");
-            throw new Exception("No existe doctor con esa cuenta");
-        } else {
-            return idMedico;
+
+        if (rs.next()) {
+            if (rs.getInt("idEmpleado") >= 1) {
+                //System.out.println("dentro del else: " + idMedico);
+
+                return true;
+            }
         }
+        return false;
 
     }
 

@@ -52,6 +52,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -134,7 +135,7 @@ public class ProximaConsultaFXMLController implements Initializable {
     
     private Validate validar = new Validate();
     
-  
+    private DatePicker Fecha;
     
     /**
      * Initializes the controller class.
@@ -183,7 +184,7 @@ public class ProximaConsultaFXMLController implements Initializable {
         consulta.setIdOperacion(Integer.parseInt(validar.ultimoId("Operaciones")) + 1);
         
         //int idConsulta = Integer.parseInt(validar.ultimoId("ConsultasMedicas")) + 1;
-        consulta.setIdPersona1(idMedico);
+        consulta.setIdPersona1(1);
         consulta.setIdPersona2(Nhistoria);
         //consulta.setCedulaPaciente(CedulaPC); 
            
@@ -343,10 +344,10 @@ public class ProximaConsultaFXMLController implements Initializable {
        HBox texto1 = new HBox();
        
        HBox texto3 = new HBox();
-
-       Label nb = new Label("Fecha y Hora"); 
+       Fecha = new DatePicker();
+       Label nb = new Label("Fecha: "); 
        nbIn = new TextField();
-       texto1.getChildren().addAll(nb,nbIn);
+       texto1.getChildren().addAll(nb,Fecha);
        nbIn.setPromptText("yyyy-mm-dd  hh-mm");
      
 
@@ -380,12 +381,13 @@ public class ProximaConsultaFXMLController implements Initializable {
        Guardar.setAlignment(Pos.BOTTOM_LEFT); 
        Guardar.setOnMouseClicked(EventoG ->{
            
-           if(DesIn.getText().equals("") || nbIn.getText().equals("")){
+           if(DesIn.getText().equals("") || Fecha.getValue() == null){
                
                  Alerta("No ha colocado la pregunta!");
                
-           }else{
-               citas.add(new Cita(nbIn.getText(),DesIn.getText()));
+           }else{  // formatearFechaHoraFb
+               
+               citas.add(new Cita(Fecha.getValue().toString(),DesIn.getText()));
                HBox contenedorH = new HBox();
                Label hora = new Label("Fecha:");
                Label citaH = new Label(nbIn.getText());

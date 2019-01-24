@@ -90,9 +90,11 @@ public class PacienteTratamientoFXMLController implements Initializable {
             Fechas.setSpacing(30);
             Fechas.setPadding(new Insets(15));
             ScrolContent.getChildren().add(Fechas);
+            //System.out.println("COnsultas"+ cm.toString());
             /////Fin contenedor Fechas/////
             //System.out.println("Horarios: \n " +   cm.getTratamiento().getHorarios() );//.getHorarios().get(0).getCondicionComida() );
              for(Horario ho : cm.getTratamiento().getHorarios()){
+                 System.out.println(" wb" + ho.getAcciones().toString());
             VBox ContenedorHorario =  new VBox();
             ////titulo//////
             Label tituloHorario = new Label("Horario   " + String.valueOf(cm.getTratamiento().getHorarios().indexOf(ho) +1));
@@ -114,33 +116,41 @@ public class PacienteTratamientoFXMLController implements Initializable {
             
             
             
-            for(Accion obj: ho.getAcciones()){
+            for(HorarioAccion obj: ho.getAccionesHorarios()){
                     
-                //System.out.println("sdfsf");
+                //System.out.println("beto1");
             HBox mediciones = new HBox();
             mediciones.setSpacing(20);
              
-            if(obj instanceof MedicionGlucosa){
+            if(obj.getAccion() instanceof MedicionGlucosa){
 
             Label medicion1 = new Label("Medicion:         Presion Arterial");
             mediciones.getChildren().add(medicion1);
             
-            }else if(obj instanceof MedicionPA) {
+            }else if(obj.getAccion() instanceof MedicionPA) {
                 
                 Label medicion2 = new Label("Medicion:         Glucosa");
                 mediciones.getChildren().add(medicion2);
                 
             } 
-            else if(obj instanceof AdmiMedicina){
+            else if(obj.getAccion() instanceof AdmiMedicina){
             
-            AdmiMedicina medicacion = (AdmiMedicina)obj;
+            AdmiMedicina medicacion = (AdmiMedicina)obj.getAccion();
            // System.out.println(medicacion.toString());
             for(Producto p :  medicacion.getMedicamentos() ){
+               // System.out.println("---------------");
+               // System.out.println(p.toString());
+                //System.out.println("beto");
             Label nombre = new Label("Nombre:              " + p.getNombreComercial() );
             Label Presentacion = new Label("Presentacion:              " + p.getPresentacion() );
             Label lab = new Label("Laboratorio:                         " + p.getLaboratorio() );
             //System.out.println("beto");
-            ScrolContent.getChildren().addAll(nombre,Presentacion,lab);
+            if(!ScrolContent.getChildren().contains(nombre)){
+                
+                ScrolContent.getChildren().addAll(nombre,Presentacion,lab);
+            }
+            
+            
             }
             
             //System.out.println("ndndd");

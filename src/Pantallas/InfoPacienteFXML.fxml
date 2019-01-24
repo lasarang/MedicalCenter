@@ -67,8 +67,8 @@
       <Label fx:id="LblName" layoutX="194.0" layoutY="202.0" text="Juan Jimenez" />
       <Label fx:id="LblFechaNac" layoutX="196.0" layoutY="273.0" text="1997" />
       <Label fx:id="LblGeneL" layoutX="193.0" layoutY="389.0" text="Masculino" />
-      <Label fx:id="LblCIiuL" layoutX="578.0" layoutY="238.0" text="Guayaquil" />
-      <Label fx:id="lblDirecL" layoutX="699.0" layoutY="236.0" text="cdlaFae" />
+      <Label fx:id="LblCIiuL" layoutX="698.0" layoutY="236.0" text="Guayaquil" />
+      <Label fx:id="lblDirecL" layoutX="580.0" layoutY="236.0" text="cdlaFae" />
       <Label fx:id="LblCedula" layoutX="193.0" layoutY="332.0" text="1719058875" />
       <Label fx:id="LblEstadoL" layoutX="377.0" layoutY="272.0" text="Cansado" />
       <Button fx:id="ButtonAntecedentes" layoutX="724.0" layoutY="57.0" mnemonicParsing="false" onAction="#VerAntecedentes" prefHeight="17.0" prefWidth="142.0" style="-fx-background-color: #0B3861;" text="Ver Antecedentes" textFill="#fcfafa">
